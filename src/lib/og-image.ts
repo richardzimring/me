@@ -37,7 +37,7 @@ function getFonts() {
   return fontsPromise;
 }
 
-export async function generateOgImage(title: string, subtitle?: string): Promise<Buffer> {
+export async function generateOgImage(title: string, subtitle?: string): Promise<ArrayBuffer> {
   const { regular, bold } = await getFonts();
 
   const svg = await satori(
@@ -51,7 +51,7 @@ export async function generateOgImage(title: string, subtitle?: string): Promise
           width: '100%',
           height: '100%',
           padding: '80px',
-          backgroundColor: '#fafaf7',
+          backgroundColor: '#f5f0e8',
           fontFamily: 'Newsreader',
         },
         children: [
@@ -93,7 +93,7 @@ export async function generateOgImage(title: string, subtitle?: string): Promise
                 color: '#888883',
                 marginTop: 'auto',
               },
-              children: 'richardzimring.github.io',
+              children: 'richardzimring.github.io/me',
             },
           },
         ],
@@ -109,7 +109,8 @@ export async function generateOgImage(title: string, subtitle?: string): Promise
     },
   );
 
-  return await sharp(Buffer.from(svg))
+  const buf = await sharp(Buffer.from(svg))
     .png({ compressionLevel: 9, palette: true, quality: 80 })
     .toBuffer();
+  return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
 }

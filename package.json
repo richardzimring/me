@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint . && prettier --check .",
+    "lint": "tsc --noEmit && eslint . && prettier --check .",
     "lint:fix": "eslint --fix . && prettier --write .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -29,6 +29,7 @@
     "sharp": "^0.34.5"
   },
   "devDependencies": {
+    "@types/node": "^25.4.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.0",
     "eslint": "^10.0.3",

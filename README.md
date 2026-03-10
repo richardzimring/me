@@ -1,6 +1,6 @@
-# richardzimring.github.io/me
+# Me
 
-Personal website and blog built with [Astro](https://astro.build/).
+Personal website built with [Astro](https://astro.build/).
 
 ## Development
 
@@ -26,7 +26,7 @@ Your content here.
 
 Push to `main` — GitHub Actions deploys automatically.
 
-## Editing the Resume
+## Editing Resume
 
 Edit `src/pages/resume.md` directly.
 

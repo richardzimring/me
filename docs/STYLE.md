@@ -1,44 +1,36 @@
 # Style Guide
 
-Design inspired by [darioamodei.com](https://www.darioamodei.com/) — minimalist, typography-first, editorial aesthetic.
+Minimalist, typography-first, editorial aesthetic.
 
 ## Color Tokens
 
 All colors are CSS custom properties defined in `src/styles/global.css`.
 
-### Light Mode (default)
+### Semantic tokens (light/dark values defined per theme)
 
-| Token                    | Value     | Usage                   |
-| ------------------------ | --------- | ----------------------- |
-| `--color-bg`             | `#fafaf7` | Page background         |
-| `--color-bg-alt`         | `#f0f0eb` | Code blocks, alt bg     |
-| `--color-text`           | `#1a1a1a` | Body text               |
-| `--color-text-secondary` | `#555550` | Subtitles, descriptions |
-| `--color-text-tertiary`  | `#888883` | Dates, muted text       |
-| `--color-heading`        | `#0a0a0a` | Headings                |
-| `--color-link`           | `#1a1a1a` | Link text               |
-| `--color-border`         | `#ddd`    | Borders, dividers       |
-
-### Dark Mode
-
-| Token                    | Value     | Usage                   |
-| ------------------------ | --------- | ----------------------- |
-| `--color-bg`             | `#161616` | Page background         |
-| `--color-bg-alt`         | `#1e1e1e` | Code blocks, alt bg     |
-| `--color-text`           | `#e0e0e0` | Body text               |
-| `--color-text-secondary` | `#a0a0a0` | Subtitles, descriptions |
-| `--color-text-tertiary`  | `#707070` | Dates, muted text       |
-| `--color-heading`        | `#f0f0f0` | Headings                |
-| `--color-link`           | `#e0e0e0` | Link text               |
-| `--color-border`         | `#333`    | Borders, dividers       |
+| Token                       | Usage                    |
+| --------------------------- | ------------------------ |
+| `--color-bg`                | Page background          |
+| `--color-bg-alt`            | Code blocks, alt bg      |
+| `--color-text`              | Body text                |
+| `--color-text-secondary`    | Subtitles, descriptions  |
+| `--color-text-tertiary`     | Dates, muted text        |
+| `--color-heading`           | Headings                 |
+| `--color-link`              | Link text                |
+| `--color-link-hover`        | Link hover state         |
+| `--color-border`            | Borders, dividers        |
+| `--color-hr`                | Horizontal rules         |
+| `--color-code-bg`           | Inline and block code bg |
+| `--color-blockquote-border` | Blockquote left border   |
+| `--color-blockquote-text`   | Blockquote text          |
 
 ## Typography
 
-- **Primary font**: `Newsreader` (Google Fonts) — used for headings and body text
-- **Fallbacks**: Georgia, Times New Roman, serif
-- **Monospace**: SF Mono, Fira Code, Roboto Mono
+- **Serif**: `Newsreader` (Google Fonts) — used for headings and body text; fallbacks: Georgia, Times New Roman, serif
+- **Sans**: system UI stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, Helvetica, Arial, sans-serif)
+- **Monospace**: SF Mono, Fira Code, Fira Mono, Roboto Mono
 - **Base size**: 18px (`--text-base: 1.125rem`)
-- **Line height**: 1.7 for body (`--leading-normal`), 1.2 for headings (`--leading-tight`)
+- **Line heights**: 1.2 tight (`--leading-tight`), 1.7 normal (`--leading-normal`), 1.85 relaxed (`--leading-relaxed`)
 - **Max prose width**: 680px (`--max-width-prose`)
 
 ### Scale
@@ -66,6 +58,18 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 | `--space-2xl` | 4rem    |
 | `--space-3xl` | 6rem    |
 
+## Layout
+
+| Token               | Value  | Usage                        |
+| ------------------- | ------ | ---------------------------- |
+| `--max-width-prose` | 680px  | Article/prose content width  |
+| `--max-width-page`  | 780px  | Overall page container width |
+| `--page-padding`    | 1.5rem | Horizontal page padding      |
+
+## Transitions
+
+- `--transition-color` — smooth `color`, `background-color`, and `border-color` transitions (0.2s ease); applied to body, links, and interactive elements for theme switching
+
 ## Component Conventions
 
 - All styling uses CSS custom properties — no hardcoded colors or sizes
@@ -80,4 +84,4 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 - Toggle state is stored in `localStorage` under the key `theme`
 - Falls back to `prefers-color-scheme` media query
 - A blocking inline script in `<head>` prevents flash of wrong theme on load
-- The toggle button is a circle with sun/moon SVG icons
+- The toggle button is a sun/moon SVG icon in the app bar

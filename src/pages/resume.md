@@ -8,8 +8,6 @@ description: "Richard Zimring's resume."
 
 Software Engineer
 
----
-
 ## Experience
 
 ### Software Engineer — Company Name
@@ -26,15 +24,11 @@ _2022 – 2024_
 - Placeholder for your previous role
 - Replace with real details
 
----
-
 ## Education
 
 ### University Name
 
 _B.S. in Computer Science, 20XX_
-
----
 
 ## Skills
 
@@ -42,10 +36,8 @@ _B.S. in Computer Science, 20XX_
 - **Frameworks**: React, Node.js, Astro
 - **Tools**: Git, Docker, AWS
 
----
-
 ## Links
 
 - [GitHub](https://github.com/richardzimring)
 - [LinkedIn](https://linkedin.com/in/richardzimring)
-- [Email](mailto:richard@example.com)
+- [X](https://x.com/richardzimring)
