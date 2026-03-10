@@ -4,10 +4,6 @@ title: Resume
 description: "Richard Zimring's resume."
 ---
 
-# Richard Zimring
-
-Software Engineer
-
 ## Experience
 
 ### Software Engineer — Company Name

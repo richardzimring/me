@@ -7,10 +7,9 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
-  homeIconOnly?: boolean;
 }
 
-const { title, description, ogImage, homeIconOnly = false } = Astro.props;
+const { title, description, ogImage } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,7 +19,7 @@ const { title, description, ogImage, homeIconOnly = false } = Astro.props;
   </head>
   <body>
     <div class="page-container">
-      <Header homeIconOnly={homeIconOnly} />
+      <Header />
       <main>
         <slot />
       </main>

@@ -29,7 +29,7 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 - **Serif**: `Newsreader` (Google Fonts) — used for headings and body text; fallbacks: Georgia, Times New Roman, serif
 - **Sans**: system UI stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, Helvetica, Arial, sans-serif)
 - **Monospace**: SF Mono, Fira Code, Fira Mono, Roboto Mono
-- **Base size**: 18px (`--text-base: 1.125rem`)
+- **Base size**: 20px (`--text-base: 1.25rem`)
 - **Line heights**: 1.2 tight (`--leading-tight`), 1.7 normal (`--leading-normal`), 1.85 relaxed (`--leading-relaxed`)
 - **Max prose width**: 680px (`--max-width-prose`)
 
@@ -39,7 +39,7 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 | ------------- | ---- | ------------------ |
 | `--text-xs`   | 13px | Footer, fine print |
 | `--text-sm`   | 15px | Dates, TOC, meta   |
-| `--text-base` | 18px | Body text          |
+| `--text-base` | 20px | Body text          |
 | `--text-lg`   | 20px | Large body, h4     |
 | `--text-xl`   | 24px | h3, section heads  |
 | `--text-2xl`  | 32px | h2                 |
@@ -63,7 +63,7 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 | Token               | Value  | Usage                        |
 | ------------------- | ------ | ---------------------------- |
 | `--max-width-prose` | 680px  | Article/prose content width  |
-| `--max-width-page`  | 780px  | Overall page container width |
+| `--max-width-page`  | 680px  | Overall page container width |
 | `--page-padding`    | 1.5rem | Horizontal page padding      |
 
 ## Transitions
