@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonicalURL?: URL | string;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/me/og/default.png',
+  canonicalURL = new URL(Astro.url.pathname, Astro.site),
+} = Astro.props;
+
+const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/me/favicon.svg" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:site_name" content="Richard Zimring" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+
+<!-- Prevent flash of wrong theme -->
+<script is:inline>
+  (function () {
+    const stored = localStorage.getItem('theme');
+    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', stored || preferred);
+  })();
+</script>

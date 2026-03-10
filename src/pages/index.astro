@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Richard Zimring" description="Software engineer. Personal website and writing.">
+  <section class="hero">
+    <h1>Richard Zimring</h1>
+    <p class="bio">Software engineer. I build things and occasionally write about them.</p>
+  </section>
+
+  {
+    allPosts.length > 0 && (
+      <section>
+        <h2 class="section-heading">Writing</h2>
+        <ul class="link-list">
+          {allPosts.map((post) => (
+            <li>
+              <a href={`/me/posts/${post.id}/`}>{post.data.title}</a>
+              <span class="date">
+                {post.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                })}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section>
+    <h2 class="section-heading">Resume</h2>
+    <ul class="link-list">
+      <li>
+        <a href="/me/resume/">View resume</a>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-heading">Links</h2>
+    <ul class="link-list">
+      <li><a href="https://github.com/richardzimring">GitHub</a></li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero h1 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .bio {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: var(--max-width-prose);
+  }
+</style>

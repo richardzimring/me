@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Writing — Richard Zimring" description="Posts and essays by Richard Zimring.">
+  <h1>Writing</h1>
+
+  {allPosts.length === 0 && <p>No posts yet.</p>}
+
+  <ul class="link-list">
+    {
+      allPosts.map((post) => (
+        <li>
+          <a href={`/me/posts/${post.id}/`}>{post.data.title}</a>
+          <span class="date">
+            {post.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+            })}
+          </span>
+          {post.data.description && <p class="post-excerpt">{post.data.description}</p>}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .post-excerpt {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    margin-top: var(--space-xs);
+    margin-bottom: 0;
+  }
+</style>
