@@ -15,10 +15,42 @@ const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
       <ul>
         {filtered.map((heading) => (
           <li class={heading.depth === 3 ? 'depth-3' : ''}>
-            <a href={`#${heading.slug}`}>{heading.text}</a>
+            <a href={`#${heading.slug}`} data-heading={heading.slug}>
+              {heading.text}
+            </a>
           </li>
         ))}
       </ul>
     </nav>
   )
 }
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('.toc a[data-heading]');
+  if (links.length > 0) {
+    const headingEls = Array.from(links).map((link) =>
+      document.getElementById(link.dataset.heading!),
+    );
+
+    const activate = (index: number) => {
+      links.forEach((l) => l.classList.remove('active'));
+      if (index >= 0) links[index].classList.add('active');
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const i = headingEls.indexOf(entry.target as HTMLElement);
+            if (i !== -1) activate(i);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -80% 0px', threshold: 0 },
+    );
+
+    headingEls.forEach((el) => el && observer.observe(el));
+
+    activate(0);
+  }
+</script>

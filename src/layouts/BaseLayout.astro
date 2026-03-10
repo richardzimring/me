@@ -1,16 +1,16 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  homeIconOnly?: boolean;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, homeIconOnly = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,11 +20,10 @@ const { title, description, ogImage } = Astro.props;
   </head>
   <body>
     <div class="page-container">
-      <Header />
+      <Header homeIconOnly={homeIconOnly} />
       <main>
         <slot />
       </main>
-      <Footer />
     </div>
   </body>
 </html>

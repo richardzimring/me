@@ -9,8 +9,11 @@ const allPosts = (await getCollection('posts'))
 
 <BaseLayout title="Richard Zimring" description="Software engineer. Personal website and writing.">
   <section class="hero">
-    <h1>Richard Zimring</h1>
-    <p class="bio">Software engineer. I build things and occasionally write about them.</p>
+    <p class="bio">
+      Building <a href="https://maven.sportradar.com">Maven</a> at <a href="https://sportradar.com"
+        >Sportradar</a
+      >.
+    </p>
   </section>
 
   {
@@ -35,10 +38,15 @@ const allPosts = (await getCollection('posts'))
   }
 
   <section>
-    <h2 class="section-heading">Resume</h2>
+    <h2 class="section-heading">Projects</h2>
     <ul class="link-list">
       <li>
-        <a href="/me/resume/">View resume</a>
+        <a href="https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297">Gather</a>
+        <span class="date">iOS app</span>
+      </li>
+      <li>
+        <a href="https://richardzimring.github.io/heatstrike">Heatstrike</a>
+        <span class="date">Web</span>
       </li>
     </ul>
   </section>
@@ -46,24 +54,20 @@ const allPosts = (await getCollection('posts'))
   <section>
     <h2 class="section-heading">Links</h2>
     <ul class="link-list">
+      <li><a href="/me/resume/">Resume</a></li>
       <li><a href="https://github.com/richardzimring">GitHub</a></li>
+      <li><a href="https://x.com/richardzimring">X</a></li>
     </ul>
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    margin-bottom: var(--space-xl);
-  }
-
-  .hero h1 {
-    font-size: var(--text-4xl);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
   .bio {
     font-size: var(--text-lg);
-    color: var(--color-text-secondary);
     max-width: var(--max-width-prose);
   }
 </style>

@@ -6,7 +6,7 @@ const title = frontmatter?.title ?? 'Resume';
 const description = frontmatter?.description ?? "Richard Zimring's resume.";
 ---
 
-<BaseLayout title={`${title} — Richard Zimring`} description={description}>
+<BaseLayout title={`${title} — Richard Zimring`} description={description} homeIconOnly>
   <div class="resume prose">
     <slot />
   </div>

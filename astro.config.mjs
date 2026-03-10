@@ -5,6 +5,14 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx()],
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
+  },
   // For GitHub Pages at richardzimring.github.io/me
   // When migrating to a custom domain: update `site` and remove `base`
   site: 'https://richardzimring.github.io',
