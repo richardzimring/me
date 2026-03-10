@@ -30,7 +30,7 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 - **Sans**: system UI stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, Helvetica, Arial, sans-serif)
 - **Monospace**: SF Mono, Fira Code, Fira Mono, Roboto Mono
 - **Base size**: 20px (`--text-base: 1.25rem`)
-- **Line heights**: 1.2 tight (`--leading-tight`), 1.7 normal (`--leading-normal`), 1.85 relaxed (`--leading-relaxed`)
+- **Line heights**: 1.2 tight (`--leading-tight`), 1.5 normal (`--leading-normal`), 1.7 relaxed (`--leading-relaxed`)
 - **Max prose width**: 680px (`--max-width-prose`)
 
 ### Scale
