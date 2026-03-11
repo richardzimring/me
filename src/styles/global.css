@@ -174,7 +174,7 @@ ol {
 
 p + ul,
 p + ol {
-  margin-top: calc(-1 * var(--space-md)) !important;
+  margin-top: calc(-1 * var(--space-xs)) !important;
 }
 
 li {
@@ -450,12 +450,133 @@ th {
   margin-bottom: var(--space-xs);
 }
 
+.resume h3 ~ h3 {
+  margin-top: var(--space-xl);
+}
+
 .resume p {
   margin-bottom: var(--space-md);
 }
 
 .resume ul {
   margin-bottom: var(--space-md);
+}
+
+.resume-entry {
+  margin-bottom: var(--space-xl);
+}
+
+.resume-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+  margin-bottom: 0;
+}
+
+.resume-entry-company {
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-heading);
+}
+
+.resume-entry-company-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.resume-entry-location {
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.resume-entry-dates {
+  font-size: var(--text-sm);
+  color: var(--color-heading);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.resume-entry-title {
+  font-style: italic;
+  margin-bottom: var(--space-sm);
+  margin-top: 0;
+  color: var(--color-text);
+}
+
+/* --- Experience Timeline --- */
+.timeline-employer {
+  margin-top: 0;
+}
+
+.timeline-roles {
+  padding-left: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.timeline-entry {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.timeline-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 0.35em;
+}
+
+.timeline-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.timeline-line {
+  width: 1px;
+  flex-grow: 1;
+  background-color: var(--color-border);
+  margin: var(--space-xs) 0;
+  min-height: var(--space-md);
+}
+
+.timeline-body {
+  padding-bottom: var(--space-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.timeline-role-title {
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 0;
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+.timeline-role-period {
+  font-size: var(--text-sm);
+  color: var(--color-heading);
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.timeline-bullets {
+  margin-bottom: 0;
 }
 
 /* --- Responsive --- */

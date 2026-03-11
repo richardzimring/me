@@ -9,11 +9,12 @@ const allPosts = (await getCollection('posts'))
 
 <BaseLayout title="Richard Zimring" description="Software engineer. Personal website and writing.">
   <section class="hero">
-    <p class="bio">
+    <p>
       Building <a href="https://maven.sportradar.com">Maven</a> at <a href="https://sportradar.com"
         >Sportradar</a
       >.
     </p>
+    <p>See my full <a href="/me/resume/">resume</a>.</p>
   </section>
 
   {
@@ -54,7 +55,6 @@ const allPosts = (await getCollection('posts'))
   <section>
     <h2 class="section-heading">Links</h2>
     <ul class="link-list">
-      <li><a href="/me/resume/">Resume</a></li>
       <li><a href="https://github.com/richardzimring">GitHub</a></li>
       <li><a href="https://linkedin.com/in/richardzimring">LinkedIn</a></li>
       <li><a href="https://x.com/richardzimring">X</a></li>
@@ -65,10 +65,5 @@ const allPosts = (await getCollection('posts'))
 <style>
   .hero {
     margin-bottom: var(--space-lg);
-  }
-
-  .bio {
-    font-size: var(--text-lg);
-    max-width: var(--max-width-prose);
   }
 </style>

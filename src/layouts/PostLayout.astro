@@ -37,5 +37,19 @@ const formattedDate = date.toLocaleDateString('en-US', {
         <slot />
       </article>
     </div>
+    <script>
+      document.querySelectorAll('a[href]').forEach((a) => {
+        const href = (a as HTMLAnchorElement).href;
+        try {
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+          }
+        } catch {
+          // malformed href — leave as-is
+        }
+      });
+    </script>
   </body>
 </html>

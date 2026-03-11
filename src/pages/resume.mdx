@@ -1,0 +1,103 @@
+---
+layout: ../layouts/ResumeLayout.astro
+title: Resume
+description: 'Richard Zimring'
+---
+
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+
+## Experience
+
+<ExperienceTimeline
+  company="Sportradar"
+  location="Minneapolis, MN"
+  roles={[
+    {
+      title: 'Senior Software Engineer',
+      period: 'Mar 2025 – Present',
+      bullets: ['TODO', 'TODO'],
+    },
+    {
+      title: 'Software Engineer',
+      period: 'Sep 2023 – Mar 2025',
+      bullets: ['TODO', 'TODO'],
+    },
+    {
+      title: 'Software Engineering Intern',
+      period: 'Jun 2022 – Sep 2022',
+      bullets: [
+        'Designed and shipped a serverless Typescript data-integrity microservice to validate migrations of upstream data sources in production warehouses',
+      ],
+    },
+  ]}
+/>
+
+<div class="resume-entry">
+  <div class="resume-entry-header">
+    <div class="resume-entry-company-block">
+      <span class="resume-entry-company">Kellogg School of Management</span>
+      <span class="resume-entry-location">Evanston, IL</span>
+    </div>
+    <span class="resume-entry-dates">Aug 2021 – Jun 2022</span>
+  </div>
+  <p class="resume-entry-title">Research Assistant</p>
+
+- Researched smart contract exploits, cross-chain arbitrage, and DEX market manipulation under Dr. Sarit Markovich
+- Built a live analysis dashboard and analyzed terabytes of historical cryptocurrency transaction data across ETH, BSC, and MATIC markets in collaboration with bloXroute Labs
+
+</div>
+
+<div class="resume-entry">
+  <div class="resume-entry-header">
+    <div class="resume-entry-company-block">
+      <span class="resume-entry-company">JobOptim</span>
+      <span class="resume-entry-location">Minneapolis, MN</span>
+    </div>
+    <span class="resume-entry-dates">Jun 2021 – Oct 2021</span>
+  </div>
+  <p class="resume-entry-title">Data Science Intern</p>
+
+- Built a database of 1M+ medical codes across CMS/AMA standards and modeled physician compensation by specialty, location, and experience
+
+</div>
+
+## Projects
+
+### [Gather](https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297)
+
+iOS app for coordinating plans with friends.
+
+- Syncs with Apple, Google, and Outlook calendars to show real-time availability and save events (automatic import & export sync)
+- Creates events with invitations, counter-proposals, RSVPs, and location search
+- Push notifications, haptics, blocked time windows, friends/groups
+- Built fully in TypeScript with React Native/Expo frontend and serverless Node/Hono AWS Lambda + API Gateway + PostgreSQL backend
+
+### [Heatstrike](https://richardzimring.github.io/heatstrike)
+
+Web app displaying live, interactive stock option data for any ticker.
+
+- 2D heatmap of options chain data (strikes × expirations) colored by volume, open interest, price, spread, or greeks — cells link to Nasdaq contract pages
+- React 19 + TypeScript frontend with visx for visualization, auto-generated API client from OpenAPI spec
+- Serverless Hono backend on AWS Lambda + API Gateway with DynamoDB caching and a scheduled Lambda that refreshes valid tickers daily from OCC
+
+## Education
+
+<div class="resume-entry">
+  <div class="resume-entry-header"><div class="resume-entry-company-block"><span class="resume-entry-company">Northwestern University</span><span class="resume-entry-location">Evanston, IL</span></div><span class="resume-entry-dates">2020 – 2023</span></div>
+  <p class="resume-entry-title">McCormick School of Engineering</p>
+
+B.S. Computer Science · GPA 3.95/4.0
+
+</div>
+
+## Skills
+
+- **Languages**: TypeScript, Python, C, SQL
+- **Infrastructure**: AWS (Lambda, Bedrock, DynamoDB, API Gateway, Cognito, Step Functions, S3, Codebuild, CDK, Route53, CloudFormation), PostgreSQL, Azure AI Foundry, Google Vertex AI
+- **Focus**: AI agents, web applications, database modeling, serverless architecture
+
+## Links
+
+- [GitHub](https://github.com/richardzimring)
+- [LinkedIn](https://linkedin.com/in/richardzimring)
+- [X](https://x.com/richardzimring)

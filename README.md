@@ -1,6 +1,6 @@
 # Me
 
-Personal website built with [Astro](https://astro.build/).
+Personal website built with [Astro](https://astro.build/) and GitHub Actions.
 
 ## Development
 
@@ -23,8 +23,6 @@ date: 2026-03-10
 ---
 Your content here.
 ```
-
-Push to `main` — GitHub Actions deploys automatically.
 
 ## Editing Resume
 
