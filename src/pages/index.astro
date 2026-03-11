@@ -8,11 +8,17 @@ const allPosts = (await getCollection('posts'))
 ---
 
 <BaseLayout title="Richard Zimring" description="Software engineer. Personal website and writing.">
-  <section class="hero">
+  <section>
     <p>
-      Building <a href="https://maven.sportradar.com">Maven</a> at <a href="https://sportradar.com"
-        >Sportradar</a
-      >.
+      Building AI agents for sports. Currently leading <a href="https://maven.sportradar.com"
+        >Maven</a
+      > at <a href="https://sportradar.com">Sportradar</a>, a generative AI platform for sports
+      research, used by major broadcast networks to answer statistical questions and find storylines
+      for live broadcast, including during the 2025 World Series and 2026 Superbowl.
+    </p>
+    <p>
+      Previously researched crypto markets at <a href="https://kellogg.northwestern.edu">Kellogg</a
+      >. Studied CS at Northwestern.
     </p>
     <p>See my full <a href="/me/resume/">resume</a>.</p>
   </section>
@@ -61,9 +67,3 @@ const allPosts = (await getCollection('posts'))
     </ul>
   </section>
 </BaseLayout>
-
-<style>
-  .hero {
-    margin-bottom: var(--space-lg);
-  }
-</style>

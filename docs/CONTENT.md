@@ -47,5 +47,4 @@ OG images are **generated automatically at build time** using [satori](https://g
 
 - Use `##` headings to create sections — these auto-generate the Table of Contents on post pages
 - `###` headings appear indented in the TOC
-- Keep line lengths comfortable for reading (the CSS caps prose at 680px)
 - Links are automatically styled with underlines
