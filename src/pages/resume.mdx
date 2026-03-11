@@ -15,12 +15,18 @@ import ExperienceTimeline from '../components/ExperienceTimeline.astro';
     {
       title: 'Senior Software Engineer',
       period: 'Mar 2025 – Present',
-      bullets: ['TODO', 'TODO'],
+      bullets: [
+        'Lead development of Maven, a generative AI sports research platform that answers natural-language questions primarily by writing and executing SQL against Sportradar databases — designed the SQL Agent architecture that increased accuracy from 30% to 82% and made the system league-agnostic across MLB, NFL, NBA, NHL, CFB, and CBK',
+        'Simplified Maven from a multi-step Step Function pipeline to an agentic loop in a single Lambda, migrated to the Vercel AI SDK for model-agnostic support (OpenAI, Anthropic, Gemini, Bedrock), and shipped production features including a Slack integration with our Research team for human verification, persistent conversations, collapsible reasoning, inline tables with metadata extraction, and usage analytics — Maven insights were used on-air during the 2025 World Series on FOX',
+      ],
     },
     {
       title: 'Software Engineer',
       period: 'Sep 2023 – Mar 2025',
-      bullets: ['TODO', 'TODO'],
+      bullets: [
+        'Built and presented the prototype that launched the NLI (Natural Language Interface) project, a chat interface for querying data by writing query engine OLAP DSL over the Radar360 sports data catalog using mutli-step prompt flows and RAG  — then led development of core services (Question Service, Test Framework, Maven) as the project scaled from prototype to product',
+        'Drove platform-wide improvements: created a reusable Express/Lambda middleware package adopted across all Radar360 APIs, deployed custom domains via a custom Serverless Framework plugin, cut deployment time 50% by applying graph analysis to the construction step function, and standardized security monitoring across the tribe',
+      ],
     },
     {
       title: 'Software Engineering Intern',
