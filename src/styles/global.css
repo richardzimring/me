@@ -307,6 +307,30 @@ th {
   margin-left: var(--space-sm);
 }
 
+/* --- Draft Badge --- */
+.draft-badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9a6800;
+  background-color: #fff3cc;
+  border: 1px solid #e6c84a;
+  border-radius: 3px;
+  padding: 1px 6px;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+  line-height: 1.6;
+}
+
+[data-theme='dark'] .draft-badge {
+  color: #ffd166;
+  background-color: #2a2200;
+  border-color: #554400;
+}
+
 /* --- Post Title --- */
 .post-title {
   font-size: var(--text-4xl);
