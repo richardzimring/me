@@ -16,7 +16,7 @@ const allPosts = (await getCollection('posts'))
     {
       allPosts.map((post) => (
         <li>
-          <a href={`/me/posts/${post.id}/`}>{post.data.title}</a>
+          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
           <span class="date">
             {post.data.date.toLocaleDateString('en-US', {
               year: 'numeric',
