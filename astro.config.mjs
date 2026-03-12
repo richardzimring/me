@@ -13,8 +13,5 @@ export default defineConfig({
       },
     },
   },
-  // For GitHub Pages at richardzimring.github.io/me
-  // When migrating to a custom domain: update `site` and remove `base`
-  site: 'https://richardzimring.github.io',
-  base: '/me',
+  site: 'https://richardzimring.com',
 });

@@ -28,7 +28,7 @@ src/
 - **Styling**: Vanilla CSS with custom properties (no Tailwind)
 - **Fonts**: Newsreader (serif) from Google Fonts
 - **Deployment**: GitHub Pages via GitHub Actions on push to `main`
-- **Base path**: `/me` (configured in `astro.config.mjs`)
+- **Domain**: `richardzimring.com` (custom domain via GitHub Pages)
 
 ## Linting & Formatting
 
