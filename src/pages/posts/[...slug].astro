@@ -18,7 +18,7 @@ const { Content, headings } = await render(post);
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
-  ogImage={post.data.ogImage || `/me/og/${post.id}.png`}
+  ogImage={post.data.ogImage || `/og/${post.id}.png`}
   headings={headings}
 >
   <Content />

@@ -20,7 +20,7 @@ const allPosts = (await getCollection('posts'))
       Previously researched crypto markets at <a href="https://kellogg.northwestern.edu">Kellogg</a
       >. Studied CS at Northwestern.
     </p>
-    <p>See my full <a href="/me/resume/">resume</a>.</p>
+    <p>See my full <a href="/resume/">resume</a>.</p>
   </section>
 
   {
@@ -30,7 +30,7 @@ const allPosts = (await getCollection('posts'))
         <ul class="link-list">
           {allPosts.map((post) => (
             <li>
-              <a href={`/me/posts/${post.id}/`}>{post.data.title}</a>
+              <a href={`/posts/${post.id}/`}>{post.data.title}</a>
               <span class="date">
                 {post.data.date.toLocaleDateString('en-US', {
                   year: 'numeric',
