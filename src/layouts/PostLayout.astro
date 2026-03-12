@@ -10,9 +10,10 @@ interface Props {
   date: Date;
   ogImage?: string;
   headings: { depth: number; slug: string; text: string }[];
+  draft?: boolean;
 }
 
-const { title, description, date, ogImage, headings } = Astro.props;
+const { title, description, date, ogImage, headings, draft } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -31,6 +32,7 @@ const formattedDate = date.toLocaleDateString('en-US', {
       <Header />
       <TableOfContents headings={headings} />
       <article class="prose">
+        {draft && <div class="draft-banner">Draft — not published</div>}
         <h1 class="post-title">{title}</h1>
         {description && <p class="post-description">{description}</p>}
         <p class="post-meta">{formattedDate}</p>
@@ -53,3 +55,19 @@ const formattedDate = date.toLocaleDateString('en-US', {
     </script>
   </body>
 </html>
+
+<style>
+  .draft-banner {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #9a6800;
+    background-color: #fff3cc;
+    border: 1px solid #e6c84a;
+    border-radius: 4px;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+</style>
