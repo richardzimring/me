@@ -1,6 +1,6 @@
 # richardzimring.com
 
-My personal website — a writing-focused blog and resume, built with [Astro](https://astro.build/).
+My personal website. Built with [Astro](https://astro.build/).
 
 **Live site**: [richardzimring.com](https://richardzimring.com)
 
