@@ -5,7 +5,6 @@ This is Richard Zimring's personal website built with Astro.
 ## Key Documentation
 
 - **[docs/WEBSITE_STYLE.md](docs/WEBSITE_STYLE.md)** — Design tokens, color scheme, typography, component conventions, dark/light mode approach. Read this before creating or editing any visual component.
-- **[docs/WRITING_STYLE.md](docs/WRITING_STYLE.md)** — Detailed writing style, tone, voice, purpose, and patterns
 - **[docs/CONTENT.md](docs/CONTENT.md)** — How to add blog posts, edit the resume, frontmatter schema, and content authoring guidelines.
 
 ## Project Structure
