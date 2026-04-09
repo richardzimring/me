@@ -1,0 +1,16 @@
+---
+import { words } from '../data/words';
+
+const today = new Date();
+const dayIndex = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+const word = words[dayIndex % words.length];
+---
+
+<section class="word-of-the-day">
+  <p class="word-label">Word of the day</p>
+  <p class="word-term">
+    {word.word}
+    {word.partOfSpeech && <span class="word-part-of-speech">{word.partOfSpeech}</span>}
+  </p>
+  <p class="word-definition">{word.definition}</p>
+</section>

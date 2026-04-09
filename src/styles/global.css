@@ -603,6 +603,79 @@ th {
   margin-bottom: 0;
 }
 
+/* --- Quote of the Day --- */
+.quote-of-the-day {
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl) 0 0;
+  border-top: 1px solid var(--color-hr);
+}
+
+.quote-of-the-day .quote-label {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.quote-of-the-day blockquote {
+  border-left: none;
+  padding-left: 0;
+  margin: 0;
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-blockquote-text);
+}
+
+.quote-of-the-day .quote-attribution {
+  margin-top: var(--space-sm);
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.word-of-the-day {
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl) 0 0;
+  border-top: 1px solid var(--color-hr);
+}
+
+.word-of-the-day .word-label {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.word-of-the-day .word-term {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.word-of-the-day .word-part-of-speech {
+  margin-left: var(--space-sm);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.word-of-the-day .word-definition {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-blockquote-text);
+}
+
 /* --- Responsive --- */
 @media (max-width: 640px) {
   h1 {
