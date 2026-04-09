@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import QuoteOfTheDay from '../components/QuoteOfTheDay.astro';
+import WordOfTheDay from '../components/WordOfTheDay.astro';
 import { getCollection } from 'astro:content';
+
+const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+// Roughly 1 in 3 days surface a word instead of a quote.
+const showWord = dayIndex % 3 === 0;
 
 const isDev = import.meta.env.DEV;
 const allPosts = (await getCollection('posts'))
@@ -67,4 +73,6 @@ const allPosts = (await getCollection('posts'))
       <li><a href="https://linkedin.com/in/richardzimring">LinkedIn</a></li>
     </ul>
   </section>
+
+  {showWord ? <WordOfTheDay /> : <QuoteOfTheDay />}
 </BaseLayout>
