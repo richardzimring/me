@@ -2,7 +2,6 @@ export interface Project {
   hash: string;
   ref: string;
   tag: string;
-  date: string;
   name: string;
   tagline: string;
   href: string;
@@ -15,7 +14,6 @@ export const projects: Project[] = [
     hash: 'e4d91a7',
     ref: 'ship/gather',
     tag: 'ios · live',
-    date: '2025-10',
     name: 'Gather',
     tagline: 'plan-with-friends app',
     href: 'https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297',
@@ -27,12 +25,11 @@ export const projects: Project[] = [
     hash: 'a12fc88',
     ref: 'ship/heatstrike',
     tag: 'web · live',
-    date: '2024-08',
     name: 'Heatstrike',
     tagline: 'options-chain heatmap',
     href: 'https://richardzimring.github.io/heatstrike',
     description:
       'Live, interactive 2D heatmap of option chains — strikes × expirations, coloured by volume, OI, spread, or the Greeks. Nightly Lambda refresh from OCC.',
-    stack: 'React 19 · visx · OpenAPI · Hono · DynamoDB',
+    stack: 'TypeScript · React · Vite · visx · Hono · AWS Lambda · DynamoDB',
   },
 ];
