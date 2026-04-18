@@ -24,6 +24,7 @@ const { Content, headings } = await render(post);
   ogImage={post.data.ogImage || `/og/${post.id}.png`}
   headings={headings}
   draft={post.data.draft}
+  slug={post.id}
 >
   <Content />
 </PostLayout>

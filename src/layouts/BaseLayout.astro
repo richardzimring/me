@@ -1,15 +1,19 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import Statusbar from '../components/Statusbar.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  path?: string;
+  active?: 'index' | 'writing' | 'resume' | null;
+  file?: string;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, path = '~', active = null, file = 'index.html' } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,11 +22,12 @@ const { title, description, ogImage } = Astro.props;
     <BaseHead title={title} description={description} ogImage={ogImage} />
   </head>
   <body>
-    <div class="page-container">
-      <Header />
-      <main>
+    <div class="window">
+      <Header path={path} active={active} />
+      <main class="pane">
         <slot />
       </main>
+      <Statusbar file={file} />
     </div>
     <script>
       document.querySelectorAll('a[href]').forEach((a) => {

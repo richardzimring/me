@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import QuoteOfTheDay from '../components/QuoteOfTheDay.astro';
 import WordOfTheDay from '../components/WordOfTheDay.astro';
+import { projects } from '../data/projects';
 import { getCollection } from 'astro:content';
 
 const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
@@ -12,67 +13,217 @@ const isDev = import.meta.env.DEV;
 const allPosts = (await getCollection('posts'))
   .filter((post) => isDev || !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (d: Date) => d.toISOString().slice(0, 10); // YYYY-MM-DD for the ls output
+
+const estimateRead = (slug: string) => {
+  // Rough read-time by essay slug — updated when essays ship.
+  const minutes: Record<string, number> = {
+    'trust-as-the-scarcest-resource': 9,
+    'on-agi': 12,
+    'social-media-as-it-was-promised': 11,
+    'the-productivity-squeeze': 14,
+  };
+  return minutes[slug] ?? 8;
+};
 ---
 
-<BaseLayout title="Richard Zimring" description="Software engineer. Personal website and writing.">
-  <section>
-    <p>
-      Building AI agents for sports. Currently leading <a href="https://maven.sportradar.com"
-        >Maven</a
-      > at <a href="https://sportradar.com">Sportradar</a>, a generative AI platform for sports
-      research, used by major broadcast networks to answer statistical questions and find storylines
-      for live broadcast, including during the 2025 World Series and 2026 Superbowl.
-    </p>
-    <p>
-      Previously researched crypto markets at <a href="https://kellogg.northwestern.edu">Kellogg</a
-      >. Studied CS at Northwestern.
-    </p>
-    <p>See my full <a href="/resume/">resume</a>.</p>
+<BaseLayout
+  title="Richard Zimring"
+  description="Software engineer building AI agents for sport. Personal site and writing."
+  active="index"
+  file="index.html"
+  path="/"
+>
+  {/* $ whoami --verbose */}
+  <div class="prompt">
+    <div class="prompt-head">
+      <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+      ><span class="sep">:</span><span class="path">~</span><span class="branch"> (main)</span><span
+        class="sep"
+      >
+        $</span
+      >
+    </div>
+    <div class="prompt-cmd">
+      <span class="cmd">whoami</span>
+      <span class="flag">--verbose</span>
+    </div>
+  </div>
+
+  <section class="whoami">
+    <span class="whoami-tag">/etc/about.txt</span>
+    <h1>
+      <span class="name">richard_zimring</span><span class="punct"> ::</span>
+      <span class="role"> software_engineer(ai, sports)</span>
+    </h1>
+    <div class="whoami-body">
+      <p>
+        Leading <a href="https://maven.sportradar.com">Maven</a> at <a href="https://sportradar.com"
+          >Sportradar</a
+        > — a generative AI platform for sports research. Used on-air during the 2025 World Series and
+        2026 Super Bowl to answer statistical questions and find storylines under live-broadcast pressure.
+      </p>
+      <p>
+        Previously: crypto-market research at <a href="https://kellogg.northwestern.edu">Kellogg</a
+        >, CS at Northwestern.
+      </p>
+      <p>
+        <span class="accent"
+          >Currently agent architecture, accuracy, and the unglamorous work of making systems behave
+          in production.</span
+        >
+      </p>
+    </div>
   </section>
 
+  {/* Writing — ls -lht essays/ */}
   {
     allPosts.length > 0 && (
-      <section>
-        <h2 class="section-heading">Writing</h2>
-        <ul class="link-list">
+      <section class="section">
+        <div class="prompt">
+          <div class="prompt-head">
+            <>
+              <span class="user">richard</span>
+              <span class="sep">@</span>
+              <span class="user">zimring</span>
+              <span class="sep">:</span>
+              <span class="path">~/writing</span>
+              <span class="sep"> $</span>
+            </>
+          </div>
+          <div class="prompt-cmd">
+            <span class="cmd">ls</span> <span class="flag">-lht</span>{' '}
+            <span class="arg">posts/</span>
+          </div>
+        </div>
+
+        <div class="ls" role="list">
+          <div class="ls-head" aria-hidden="true">
+            <div class="date">date</div>
+            <div>title</div>
+            <div class="size">read</div>
+            <div class="perms">perms</div>
+          </div>
           {allPosts.map((post) => (
-            <li>
-              <a href={`/posts/${post.id}/`}>{post.data.title}</a>
-              {post.data.draft && <span class="draft-badge">draft</span>}
-              <span class="date">
-                {post.data.date.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                })}
-              </span>
-            </li>
+            <a
+              class={`ls-row${post.data.draft ? ' draft' : ''}`}
+              href={`/posts/${post.id}/`}
+              role="listitem"
+            >
+              <div class="date">{formatDate(post.data.date)}</div>
+              <div class="file">
+                <span class="title">{post.id}.mdx</span>
+                {(post.data.description || post.data.title) && (
+                  <span class="dek">{post.data.description || post.data.title}</span>
+                )}
+              </div>
+              <div class="size">{estimateRead(post.id)}m</div>
+              <div class="perms">-rw-r--r--</div>
+            </a>
           ))}
-        </ul>
+          {allPosts.some((p) => p.data.draft) && (
+            <div class="ls-legend">
+              <span class="star">*</span> unpublished draft
+            </div>
+          )}
+        </div>
       </section>
     )
   }
 
-  <section>
-    <h2 class="section-heading">Projects</h2>
-    <ul class="link-list">
-      <li>
-        <a href="https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297">Gather</a>
-        <span class="date">iOS app</span>
-      </li>
-      <li>
-        <a href="https://richardzimring.github.io/heatstrike">Heatstrike</a>
-        <span class="date">Web</span>
-      </li>
-    </ul>
+  {/* Projects — git log --oneline --graph */}
+  <section class="section">
+    <div class="prompt">
+      <div class="prompt-head">
+        <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+        ><span class="sep">:</span><span class="path">~/projects</span><span class="sep"> $</span>
+      </div>
+      <div class="prompt-cmd">
+        <span class="cmd">git log</span>
+        <span class="flag">--oneline</span>
+        <span class="flag">--graph</span>
+      </div>
+    </div>
+
+    <div class="gitlog">
+      {
+        projects.map((p) => (
+          <div class="git-entry">
+            <div class="git-graph">
+              <div class="node" />
+              <div class="line" />
+            </div>
+            <div>
+              <div class="git-meta">
+                <span class="hash">{p.hash}</span>
+                <span>{p.ref}</span>
+                <span class="tag">{p.tag}</span>
+                <span>{p.date}</span>
+              </div>
+              <div class="git-msg">
+                <a href={p.href}>{p.name}</a> — {p.tagline}
+              </div>
+              <div class="git-body">{p.description}</div>
+              <div class="git-stack">
+                <span class="plus">+</span> {p.stack}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </section>
 
-  <section>
-    <h2 class="section-heading">Links</h2>
-    <ul class="link-list">
-      <li><a href="https://github.com/richardzimring">GitHub</a></li>
-      <li><a href="https://linkedin.com/in/richardzimring">LinkedIn</a></li>
-    </ul>
+  {/* Links — cat elsewhere.yml */}
+  <section class="section">
+    <div class="prompt">
+      <div class="prompt-head">
+        <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+        ><span class="sep">:</span><span class="path">~</span><span class="sep"> $</span>
+      </div>
+      <div class="prompt-cmd">
+        <span class="cmd">cat</span>
+        <span class="arg">elsewhere.yml</span>
+      </div>
+    </div>
+
+    <div class="kvlist">
+      <div class="kv-row">
+        <div>
+          <span class="k">github</span><span class="colon">: </span><span class="v"
+            ><a href="https://github.com/richardzimring">github.com/richardzimring</a></span
+          >
+        </div>
+        <div class="hint">↗ open</div>
+      </div>
+      <div class="kv-row">
+        <div>
+          <span class="k">linkedin</span><span class="colon">: </span><span class="v"
+            ><a href="https://linkedin.com/in/richardzimring">linkedin.com/in/richardzimring</a
+            ></span
+          >
+        </div>
+        <div class="hint">↗ open</div>
+      </div>
+      <div class="kv-row">
+        <div>
+          <span class="k">resume</span><span class="colon">: </span><span class="v"
+            ><a href="/resume/">richardzimring.com/resume</a></span
+          >
+        </div>
+        <div class="hint">→ local</div>
+      </div>
+    </div>
   </section>
 
   {showWord ? <WordOfTheDay /> : <QuoteOfTheDay />}
+
+  <div class="prompt" style="margin-top: 32px;">
+    <div class="prompt-head">
+      <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+      ><span class="sep">:</span><span class="path">~</span><span class="sep"> $</span>
+    </div>
+    <div class="prompt-cmd"><span class="cursor"></span></div>
+  </div>
 </BaseLayout>

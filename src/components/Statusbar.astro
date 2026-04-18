@@ -1,0 +1,23 @@
+---
+interface Props {
+  file?: string;
+  mode?: string;
+}
+
+const { file = 'index.html', mode = 'NORMAL' } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="statusbar">
+  <span class="mode">{mode}</span>
+  <span>
+    <span class="branch">⎇ main</span>
+    <span class="dim"> · </span>
+    {file}
+    <span class="dim"> · </span>
+    utf-8
+    <span class="dim"> · </span>
+    © {year} Richard Zimring
+  </span>
+  <span class="right">Minneapolis · MSP</span>
+</footer>

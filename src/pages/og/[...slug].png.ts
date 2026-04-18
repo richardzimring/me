@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
-import { generateOgImage } from '../../lib/og-image';
+import { renderOgPng } from '../../lib/og-image';
 
 const posts = await getCollection('posts');
 
@@ -16,7 +16,15 @@ export async function GET(ctx: APIContext) {
     return new Response('Not found', { status: 404 });
   }
 
-  const png = await generateOgImage(post.data.title, post.data.description);
+  const file = `${post.id}.mdx`;
+  const png = await renderOgPng({
+    path: `~/writing/${file}`,
+    kickerCmd: 'cat',
+    kickerArg: file,
+    title: post.data.title,
+    description: post.data.description,
+    file,
+  });
 
   return new Response(png, {
     headers: { 'Content-Type': 'image/png' },
