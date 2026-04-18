@@ -3,11 +3,11 @@ import { renderOgPng } from '../../lib/og-image';
 export async function GET() {
   const png = await renderOgPng({
     path: '~',
-    kickerCmd: 'whoami',
-    kickerArg: '--verbose',
+    kickerCmd: 'cat',
+    kickerArg: 'resume.mdx',
     title: 'Richard Zimring',
-    description: 'A personal site',
-    file: 'index.html',
+    description: 'Resume',
+    file: 'resume.mdx',
   });
 
   return new Response(png, {

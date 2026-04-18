@@ -1,14 +1,11 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-
-const { frontmatter } = Astro.props;
-const title = frontmatter?.title ?? 'Resume';
-const description = frontmatter?.description ?? "Richard Zimring's resume.";
 ---
 
 <BaseLayout
-  title={`Richard Zimring — ${title}`}
-  description={description}
+  title="Richard Zimring"
+  description="Resume"
+  ogImage="/og/resume.png"
   active="resume"
   file="resume.mdx"
   path="/resume/"
