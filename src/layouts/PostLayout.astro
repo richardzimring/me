@@ -17,8 +17,6 @@ interface Props {
 
 const { title, description, date, ogImage, headings, draft, slug } = Astro.props;
 
-const metaDescription = description ?? `Richard Zimring — ${title}`;
-
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -32,11 +30,7 @@ const fileName = slug ? `${slug}.mdx` : 'post.mdx';
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead
-      title={`Richard Zimring — ${title}`}
-      description={metaDescription}
-      ogImage={ogImage}
-    />
+    <BaseHead title={title} description={description ?? 'Richard Zimring'} ogImage={ogImage} />
   </head>
   <body>
     <div class="window">

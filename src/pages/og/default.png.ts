@@ -6,7 +6,7 @@ export async function GET() {
     kickerCmd: 'whoami',
     kickerArg: '--verbose',
     title: 'Richard Zimring',
-    description: 'Software engineer building AI agents for sport. Writing and projects.',
+    description: 'A personal site',
     file: 'index.html',
   });
 

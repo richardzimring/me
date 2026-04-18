@@ -5,8 +5,8 @@ export async function GET() {
     path: '~/projects/',
     kickerCmd: 'git log',
     kickerArg: '--oneline --graph',
-    title: 'Projects',
-    description: 'Things I’ve shipped — AI agents, research tools, and side builds.',
+    title: 'Richard Zimring',
+    description: 'Projects',
     file: 'projects/index.html',
   });
 

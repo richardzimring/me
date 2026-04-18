@@ -5,8 +5,8 @@ export async function GET() {
     path: '~/writing/',
     kickerCmd: 'ls',
     kickerArg: '-lht posts/',
-    title: 'Writing',
-    description: 'Essays on AI, trust, and building systems that behave in production.',
+    title: 'Richard Zimring',
+    description: 'Posts and essays',
     file: 'writing/index.html',
   });
 
