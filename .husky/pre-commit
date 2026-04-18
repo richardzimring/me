@@ -1,1 +1,2 @@
+node scripts/check-drafts.mjs
 npx lint-staged
