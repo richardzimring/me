@@ -6,41 +6,74 @@ const isDev = import.meta.env.DEV;
 const allPosts = (await getCollection('posts'))
   .filter((post) => isDev || !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+
+const estimateRead = (slug: string) => {
+  const minutes: Record<string, number> = {
+    'trust-as-the-scarcest-resource': 9,
+    'on-agi': 12,
+    'social-media-as-it-was-promised': 11,
+    'the-productivity-squeeze': 14,
+  };
+  return minutes[slug] ?? 8;
+};
 ---
 
-<BaseLayout title="Writing — Richard Zimring" description="Posts and essays by Richard Zimring.">
-  <h1>Writing</h1>
+<BaseLayout
+  title="Writing — Richard Zimring"
+  description="Posts and essays by Richard Zimring."
+  active="writing"
+  file="writing/index.html"
+  path="/writing/"
+  ogImage="/og/writing.png"
+>
+  <div class="prompt">
+    <div class="prompt-head">
+      <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+      ><span class="sep">:</span><span class="path">~/writing</span><span class="sep"> $</span>
+    </div>
+    <div class="prompt-cmd">
+      <span class="cmd">ls</span>
+      <span class="flag">-lht</span>
+      <span class="arg">posts/</span>
+    </div>
+  </div>
 
-  {allPosts.length === 0 && <p>No posts yet.</p>}
+  {
+    allPosts.length === 0 && (
+      <p style="color: var(--muted); font-family: var(--font-mono);">No posts yet.</p>
+    )
+  }
 
-  <ul class="link-list">
-    {
-      allPosts.map((post) => (
-        <li>
-          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
-          {post.data.draft && <span class="draft-badge">draft</span>}
-          <span class="date">
-            {post.data.date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-            })}
-          </span>
-          {post.data.description && <p class="post-excerpt">{post.data.description}</p>}
-        </li>
-      ))
-    }
-  </ul>
+  {
+    allPosts.length > 0 && (
+      <div class="ls">
+        <div class="ls-head">
+          <div class="date">date</div>
+          <div>title</div>
+          <div class="size">read</div>
+          <div class="perms">perms</div>
+        </div>
+        {allPosts.map((post) => (
+          <a class={`ls-row${post.data.draft ? ' draft' : ''}`} href={`/posts/${post.id}/`}>
+            <div class="date">{formatDate(post.data.date)}</div>
+            <div class="file">
+              <span class="title">{post.id}.mdx</span>
+              {(post.data.description || post.data.title) && (
+                <span class="dek">{post.data.description || post.data.title}</span>
+              )}
+            </div>
+            <div class="size">{estimateRead(post.id)}m</div>
+            <div class="perms">-rw-r--r--</div>
+          </a>
+        ))}
+        {allPosts.some((p) => p.data.draft) && (
+          <div class="ls-legend">
+            <span class="star">*</span> unpublished draft
+          </div>
+        )}
+      </div>
+    )
+  }
 </BaseLayout>
-
-<style>
-  h1 {
-    margin-bottom: var(--space-2xl);
-  }
-
-  .post-excerpt {
-    color: var(--color-text-secondary);
-    font-size: var(--text-sm);
-    margin-top: var(--space-xs);
-    margin-bottom: 0;
-  }
-</style>

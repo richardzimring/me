@@ -69,14 +69,6 @@ export const quotes: Quote[] = [
     author: 'Albus Dumbledore',
   },
   {
-    text: 'Never let your sense of morals prevent you from doing what is right.',
-    author: 'Isaac Asimov',
-  },
-  {
-    text: 'If you have an idea that you genuinely think is good, don’t let some idiot talk you out of it.',
-    author: 'Stan Lee',
-  },
-  {
     text: 'Nothing is intrinsically boring. Indeed, boredom is simply a lack of attention.',
     author: 'Sam Harris',
   },

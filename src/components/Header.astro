@@ -1,8 +1,31 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  path?: string;
+  active?: 'index' | 'writing' | 'projects' | 'resume' | null;
+}
+
+const { path = '~', active = null } = Astro.props;
 ---
 
-<header class="site-header">
-  <a href="/" class="site-title">Richard Zimring</a>
-  <ThemeToggle />
+<header class="titlebar">
+  <div class="traffic" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="titlebar-path">
+    <span class="tilde">~</span>{path !== '~' && <>{path}</>}
+    <span class="sep">·</span> richardzimring.com
+  </div>
+
+  <div class="titlebar-right">
+    <nav class="tabs" aria-label="Primary">
+      <a href="/" class={`tab-essential${active === 'index' ? ' active' : ''}`}>index</a>
+      <a href="/posts/" class={`tab-essential${active === 'writing' ? ' active' : ''}`}>writing</a>
+      <a href="/projects/" class={active === 'projects' ? 'active' : ''}>projects</a>
+      <a href="/resume/" class={active === 'resume' ? 'active' : ''}>resume</a>
+    </nav>
+    <ThemeToggle />
+  </div>
 </header>

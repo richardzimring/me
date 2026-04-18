@@ -6,10 +6,10 @@ const dayIndex = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
 const quote = quotes[dayIndex % quotes.length];
 ---
 
-<section class="quote-of-the-day">
-  <p class="quote-label">Quote of the day</p>
+<section class="fortune">
+  <div class="fortune-label">quote-of-the-day.txt</div>
   <blockquote>
     <p>{quote.text}</p>
   </blockquote>
-  <p class="quote-attribution">&mdash; {quote.author}</p>
+  <cite>— {quote.author}</cite>
 </section>

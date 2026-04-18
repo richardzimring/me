@@ -12,29 +12,44 @@ const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
   filtered.length > 0 && (
     <nav class="toc" aria-label="Table of contents">
       <div class="toc-title">Contents</div>
-      <ul>
-        {filtered.map((heading) => (
-          <li class={heading.depth === 3 ? 'depth-3' : ''}>
-            <a href={`#${heading.slug}`} data-heading={heading.slug}>
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div class="toc-inner">
+        <div class="toc-selection" aria-hidden="true" />
+        <ul>
+          {filtered.map((heading) => (
+            <li class={heading.depth === 3 ? 'depth-3' : ''}>
+              <a href={`#${heading.slug}`} data-heading={heading.slug}>
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   )
 }
 
 <script>
   const links = document.querySelectorAll<HTMLAnchorElement>('.toc a[data-heading]');
+  const selection = document.querySelector<HTMLElement>('.toc-selection');
   if (links.length > 0) {
     const headingEls = Array.from(links).map((link) =>
       document.getElementById(link.dataset.heading!),
     );
 
+    const moveSelection = (link: HTMLAnchorElement) => {
+      if (!selection) return;
+      const top = link.offsetTop;
+      const height = link.offsetHeight;
+      selection.style.setProperty('--toc-y', `${top}px`);
+      selection.style.setProperty('--toc-h', `${height}px`);
+    };
+
     const activate = (index: number) => {
       links.forEach((l) => l.classList.remove('active'));
-      if (index >= 0) links[index].classList.add('active');
+      if (index >= 0) {
+        links[index].classList.add('active');
+        moveSelection(links[index]);
+      }
     };
 
     const observer = new IntersectionObserver(
