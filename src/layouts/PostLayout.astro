@@ -18,11 +18,11 @@ interface Props {
 const { title, description, date, ogImage, headings, draft, slug } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
+  timeZone: 'UTC',
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
-
 const iso = date.toISOString().slice(0, 10);
 const fileName = slug ? `${slug}.mdx` : 'post.mdx';
 ---
@@ -47,9 +47,7 @@ const fileName = slug ? `${slug}.mdx` : 'post.mdx';
           <h1 class="post-title">{title}</h1>
           {description && <p class="post-description">{description}</p>}
           <p class="post-meta">
-            {formattedDate}
-            <span style="color: var(--muted-2);">·</span>
-            <time datetime={iso}>{iso}</time>
+            <time datetime={iso}>{formattedDate}</time>
           </p>
           <slot />
         </article>
