@@ -8,16 +8,6 @@ const allPosts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const formatDate = (d: Date) => d.toISOString().slice(0, 10);
-
-const estimateRead = (slug: string) => {
-  const minutes: Record<string, number> = {
-    'trust-as-the-scarcest-resource': 9,
-    'on-agi': 12,
-    'social-media-as-it-was-promised': 11,
-    'the-productivity-squeeze': 14,
-  };
-  return minutes[slug] ?? 8;
-};
 ---
 
 <BaseLayout
@@ -64,7 +54,7 @@ const estimateRead = (slug: string) => {
                 <span class="dek">{post.data.description || post.data.title}</span>
               )}
             </div>
-            <div class="size">{estimateRead(post.id)}m</div>
+            <div class="size">{post.data.readMinutes}m</div>
             <div class="perms">-rw-r--r--</div>
           </a>
         ))}
