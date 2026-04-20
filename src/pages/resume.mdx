@@ -14,25 +14,32 @@ import ExperienceTimeline from '../components/ExperienceTimeline.astro';
   roles={[
     {
       title: 'Senior Software Engineer',
+      team: 'Maven',
       period: 'Mar 2025 – Present',
       bullets: [
-        'Lead development of Maven, a generative AI sports research platform — designed the agent architecture that increased accuracy from 30% to 82% and made the system league-agnostic across MLB, NFL, NBA, NHL, CFB, and CBK',
-        'Shipped product features such as the ability to receive human expert verification from our Research team, rich inline tables with extracted query metadata, visualizations, and usage analytics — Maven insights were used on-air during the 2025 World Series on FOX',
+        'Lead development of Maven, a generative AI sports research platform — designed the model-agnostic (Bedrock, Azure, Vertex) file-system based, SQL writing agent architecture that increased accuracy from 30% to 82% and made the system league-agnostic across MLB, NFL, NBA, NHL, CFB, and CBK',
+        'Serve as company-wide champion for agent architecture — advise engineering teams on agent design, tooling, implementation, and evals',
+        'Shipped core product features end-to-end: rich inline tables with extracted query metadata, visualizations, expert-verification workflow with the Research team, notifications, and usage analytics',
+        'Maven insights were used on-air during the 2026 Super Bowl and 2025 World Series on FOX',
       ],
     },
     {
       title: 'Software Engineer',
+      team: 'Insights and Analytics',
       period: 'Sep 2023 – Mar 2025',
       bullets: [
-        'Built and presented the prototype that launched the NLI (Natural Language Interface) project, a chat interface for querying data by writing query engine OLAP DSL over the Radar360 sports data catalog using mutli-step prompt flows and RAG  — then led development of core services (Question Service, Test Framework, Maven) as the project scaled from prototype to product',
-        'Drove platform-wide improvements: created a reusable Express/Lambda middleware package adopted across all Radar360 APIs, deployed custom domains via a custom Serverless Framework plugin, cut deployment time 50% by applying graph analysis to the construction step function, and standardized security monitoring across the tribe',
+        'Built and demoed the prototype that launched NLI (Natural Language Interface) at engineering all-hands (800+ engineers) — a chat interface over the Radar360 sports data catalog with multi-step prompt flows generating OLAP DSL and RAG over OpenSearch-indexed expert SQL queries scraped from internal research Slack channels',
+        'Led development of core NLI services (Question Service, Test Framework, Maven) as it scaled from prototype to product; NLI was later featured at the AWS Summit Zurich 2025 keynote and demoed live at ICE Barcelona 2025',
+        'Cut platform-wide deployment time 50% by applying graph analysis to the construction step function',
+        'Drove platform-wide improvements: created a reusable Express/Lambda middleware package adopted across all Radar360 APIs, deployed custom domains via a custom Serverless Framework plugin, and standardized Mend (Whitesource) security monitoring across the tribe',
       ],
     },
     {
       title: 'Software Engineering Intern',
+      team: 'Insights and Analytics',
       period: 'Jun 2022 – Sep 2022',
       bullets: [
-        'Designed and shipped a serverless Typescript data-integrity microservice to validate migrations of upstream data sources in production warehouses',
+        'Designed and shipped a TypeScript data-integrity microservice on AWS Lambda to validate migrations of upstream data sources in production warehouses',
       ],
     },
   ]}
@@ -76,7 +83,7 @@ iOS app for coordinating plans with friends.
 - Syncs with Apple, Google, and Outlook calendars to show real-time availability and save events (automatic import & export sync)
 - Creates events with invitations, counter-proposals, RSVPs, and location search
 - Push notifications, haptics, blocked time windows, friends/groups
-- Built fully in TypeScript with React Native/Expo frontend and serverless Node/Hono AWS Lambda + API Gateway + PostgreSQL backend
+- Built fully in TypeScript with React Native/Expo frontend and Node/Hono backend on AWS Lambda + API Gateway + PostgreSQL
 
 ### [Heatstrike](https://richardzimring.github.io/heatstrike)
 
@@ -84,7 +91,7 @@ Web app displaying live, interactive stock option data for any ticker.
 
 - 2D heatmap of options chain data (strikes × expirations) colored by volume, open interest, price, spread, or greeks — cells link to Nasdaq contract pages
 - React 19 + TypeScript frontend with visx for visualization, auto-generated API client from OpenAPI spec
-- Serverless Hono backend on AWS Lambda + API Gateway with DynamoDB caching and a scheduled Lambda that refreshes valid tickers daily from OCC
+- Hono backend on AWS Lambda + API Gateway with DynamoDB caching and a scheduled Lambda that refreshes valid tickers daily from OCC
 
 ## Education
 
@@ -98,12 +105,13 @@ B.S. Computer Science · GPA 3.95/4.0
 
 ## Skills
 
-- **Languages**: TypeScript, Python, C, SQL
-- **Infrastructure**: AWS (Lambda, Bedrock, DynamoDB, API Gateway, Cognito, Step Functions, S3, Codebuild, CDK, Route53, CloudFormation), PostgreSQL, Azure AI Foundry, Google Vertex AI
-- **Focus**: AI agents, web applications, database modeling, serverless architecture
+- **Languages**: TypeScript, Python
+- **AI / LLMs**: Anthropic, OpenAI, Bedrock, Vertex AI, Azure AI Foundry; agent architectures, RAG over vector + full-text search, LLMOps (evals, dataset curation, LLM-as-judge, Langfuse, OpenTelemetry)
+- **Data**: PostgreSQL, DynamoDB, SingleStore, OpenSearch, Redis
+- **Infrastructure**: AWS (Lambda, ECS/Fargate, API Gateway, Step Functions, SQS, S3, Cognito, CDK), Auth0, Docker, event-driven architectures, streaming protocols (WebSockets, SSE)
+- **Frontend**: React, React Native / Expo, Astro, TanStack Query, GraphQL, Vite
 
 ## Links
 
 - [GitHub](https://github.com/richardzimring)
 - [LinkedIn](https://linkedin.com/in/richardzimring)
-- [X](https://x.com/richardzimring)
