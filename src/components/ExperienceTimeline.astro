@@ -30,7 +30,9 @@ const { company, location, dates, roles } = Astro.props;
       roles.map((role, i) => (
         <div class="timeline-entry">
           <div class="timeline-track">
-            <div class="timeline-dot" />
+            <div
+              class={`timeline-dot${/present/i.test(role.period) ? ' timeline-dot--current' : ''}`}
+            />
             {i < roles.length - 1 && <div class="timeline-line" />}
           </div>
           <div class="timeline-body">
