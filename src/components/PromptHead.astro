@@ -1,0 +1,14 @@
+---
+interface Props {
+  path?: string;
+}
+
+const { path = '~' } = Astro.props;
+---
+
+<div class="prompt-head">
+  <span class="host"
+    ><span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
+    ><span class="sep">:</span></span
+  ><span class="path">{path}</span><span class="sep"> $</span>
+</div>
