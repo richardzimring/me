@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Terminal from '../components/Terminal.astro';
 ---
 
 <BaseLayout
@@ -25,4 +26,6 @@ import BaseLayout from './BaseLayout.astro';
     </p>
     <slot />
   </article>
+
+  <Terminal path="~/resume" />
 </BaseLayout>

@@ -2,13 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PromptHead from '../components/PromptHead.astro';
 import QuoteOfTheDay from '../components/QuoteOfTheDay.astro';
-import WordOfTheDay from '../components/WordOfTheDay.astro';
+import Terminal from '../components/Terminal.astro';
 import { projects } from '../data/projects';
 import { getCollection } from 'astro:content';
-
-const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-// Roughly 1 in 3 days surface a word instead of a quote.
-const showWord = dayIndex % 3 === 0;
 
 const isDev = import.meta.env.DEV;
 const allPosts = (await getCollection('posts'))
@@ -204,10 +200,7 @@ const formatDate = (d: Date) => d.toISOString().slice(0, 10); // YYYY-MM-DD for 
     </div>
   </section>
 
-  {showWord ? <WordOfTheDay /> : <QuoteOfTheDay />}
+  <QuoteOfTheDay />
 
-  <div class="prompt" style="margin-top: 32px;">
-    <PromptHead />
-    <div class="prompt-cmd"><span class="cursor"></span></div>
-  </div>
+  <Terminal />
 </BaseLayout>

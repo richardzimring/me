@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Terminal from '../../components/Terminal.astro';
 import { projects } from '../../data/projects';
 ---
 
@@ -50,4 +51,6 @@ import { projects } from '../../data/projects';
       ))
     }
   </div>
+
+  <Terminal path="~/projects" />
 </BaseLayout>
