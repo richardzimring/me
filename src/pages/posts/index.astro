@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Terminal from '../../components/Terminal.astro';
 import { getCollection } from 'astro:content';
 
 const isDev = import.meta.env.DEV;
@@ -66,4 +67,6 @@ const formatDate = (d: Date) => d.toISOString().slice(0, 10);
       </div>
     )
   }
+
+  <Terminal path="~/writing" />
 </BaseLayout>
