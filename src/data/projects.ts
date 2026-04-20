@@ -18,7 +18,7 @@ export const projects: Project[] = [
     tagline: 'plan-with-friends app',
     href: 'https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297',
     description:
-      'Plan-with-friends app. Syncs Apple, Google, and Outlook calendars to surface real availability. No feed, no followers — just the specific people you know, trying to find a time.',
+      'Syncs Apple, Google, and Outlook calendars to surface availability between friends so you can find mutual free time and make plans in seconds.',
     stack: 'TypeScript · React Native · Expo · Hono · AWS Lambda · Postgres',
   },
   {
