@@ -1,0 +1,409 @@
+---
+import PromptHead from './PromptHead.astro';
+import { quotes } from '../data/quotes';
+
+interface Props {
+  path?: string;
+}
+
+const { path = '~' } = Astro.props;
+const fortuneData = JSON.stringify({ quotes });
+---
+
+<script is:inline set:html={`window.__RZ_FORTUNE__ = ${fortuneData};`} />
+
+<section class="terminal" id="terminal" style="margin-top: 32px;">
+  <div class="cmd-history" aria-live="polite"></div>
+  <div class="prompt prompt--active" id="prompt-active">
+    <PromptHead path={path} />
+    <div class="prompt-cmd">
+      <span
+        class="cmd-input"
+        contenteditable="true"
+        spellcheck="false"
+        autocapitalize="off"
+        autocorrect="off"
+        aria-label="Terminal input. Type 'help' for commands."></span><span class="cursor"></span>
+    </div>
+  </div>
+  <div class="cmd-hint" id="cmd-hint">
+    <span class="muted">type</span>
+    <span class="k">help</span>
+    <span class="muted">↵</span>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const term = document.getElementById('terminal');
+    if (!term) return;
+    const input = term.querySelector('.cmd-input');
+    const history = term.querySelector('.cmd-history');
+    const activePrompt = term.querySelector('#prompt-active');
+    const hint = document.getElementById('cmd-hint');
+    const promptHeadHTML = activePrompt.querySelector('.prompt-head').outerHTML;
+
+    const past = [];
+    let pastIdx = -1;
+
+    const esc = (s) =>
+      String(s).replace(
+        /[&<>"']/g,
+        (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+      );
+
+    function placeCaretAtEnd(el) {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    function dismissHint() {
+      if (hint) hint.style.display = 'none';
+    }
+
+    term.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      input.focus();
+      placeCaretAtEnd(input);
+    });
+
+    input.addEventListener('input', () => {
+      dismissHint();
+      if (input.innerHTML.includes('<') || input.innerHTML.includes('\n')) {
+        input.textContent = input.textContent.replace(/\n/g, '');
+        placeCaretAtEnd(input);
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        run(input.textContent);
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (past.length === 0) return;
+        pastIdx = Math.min(pastIdx + 1, past.length - 1);
+        input.textContent = past[pastIdx];
+        placeCaretAtEnd(input);
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (pastIdx <= 0) {
+          pastIdx = -1;
+          input.textContent = '';
+        } else {
+          pastIdx -= 1;
+          input.textContent = past[pastIdx];
+          placeCaretAtEnd(input);
+        }
+        return;
+      }
+      if (e.key === 'Escape') {
+        input.blur();
+      }
+    });
+
+    // Typing anywhere on the page routes to the terminal.
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const ae = document.activeElement;
+      if (ae === input) return;
+      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable))
+        return;
+
+      const sel = window.getSelection();
+      if (sel && sel.toString()) return;
+
+      const isPrintable = e.key.length === 1;
+      const isEnter = e.key === 'Enter';
+      const isBackspace = e.key === 'Backspace';
+      if (!isPrintable && !isEnter && !isBackspace) return;
+
+      e.preventDefault();
+      input.focus({ preventScroll: true });
+      placeCaretAtEnd(input);
+
+      if (isPrintable) {
+        input.textContent += e.key;
+        placeCaretAtEnd(input);
+        dismissHint();
+      } else if (isBackspace) {
+        input.textContent = input.textContent.slice(0, -1);
+        placeCaretAtEnd(input);
+      } else if (isEnter) {
+        run(input.textContent);
+      }
+    });
+
+    function print(html, cls) {
+      if (html == null || html === '') return;
+      const out = document.createElement('div');
+      out.className = 'cmd-out' + (cls ? ' ' + cls : '');
+      out.innerHTML = html;
+      history.appendChild(out);
+    }
+
+    function go(path) {
+      print(`<span class="muted">opening</span> <span class="amber">${path}</span>`);
+      setTimeout(() => (window.location.href = path), 200);
+    }
+
+    function printFortune() {
+      const pool = (window.__RZ_FORTUNE__ && window.__RZ_FORTUNE__.quotes) || [];
+      if (pool.length === 0) {
+        print('<span class="rose">fortune:</span> nothing to say.');
+        return;
+      }
+      const q = pool[(Math.random() * pool.length) | 0];
+      print([esc(q.text), `<span class="muted">— ${esc(q.author)}</span>`].join('\n'));
+    }
+
+    function runMatrix(durationMs) {
+      const glyphs = 'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789';
+      const rand = () => glyphs[(Math.random() * glyphs.length) | 0];
+
+      const el = document.createElement('div');
+      el.className = 'cmd-out matrix-rain';
+      history.appendChild(el);
+
+      const probe = document.createElement('span');
+      probe.textContent = 'M'.repeat(20);
+      el.appendChild(probe);
+      const charWidth = probe.offsetWidth / 20 || 7.2;
+      el.removeChild(probe);
+      const available = el.clientWidth || history.clientWidth || 400;
+      const cols = Math.max(16, Math.min(60, Math.floor(available / charWidth)));
+      const rows = 12;
+
+      const drops = Array.from({ length: cols }, () => ({
+        pos: ((Math.random() * rows * 2) | 0) - rows,
+        speed: 0.5 + Math.random() * 0.7,
+        trail: 4 + ((Math.random() * 6) | 0),
+      }));
+      const grid = Array.from({ length: rows }, () => Array(cols).fill(' '));
+      const life = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+      const start = Date.now();
+      let stopped = false;
+      let timer = 0;
+
+      function stop() {
+        if (stopped) return;
+        stopped = true;
+        clearInterval(timer);
+        el.remove();
+      }
+
+      // Let the user bail early with Escape or any keystroke.
+      const bail = (e) => {
+        if (e.key === 'Escape' || e.key.length === 1) stop();
+      };
+      document.addEventListener('keydown', bail, { once: true });
+
+      function tick() {
+        if (stopped) return;
+        if (Date.now() - start > durationMs) {
+          stop();
+          return;
+        }
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            if (life[r][c] > 0) life[r][c] -= 1;
+            if (life[r][c] === 0) grid[r][c] = ' ';
+          }
+        }
+        for (let c = 0; c < cols; c++) {
+          const d = drops[c];
+          d.pos += d.speed;
+          const r = Math.floor(d.pos);
+          if (r >= 0 && r < rows) {
+            grid[r][c] = rand();
+            life[r][c] = d.trail;
+          }
+          if (r > rows + d.trail) {
+            d.pos = -Math.random() * 10;
+            d.trail = 4 + ((Math.random() * 6) | 0);
+            d.speed = 0.5 + Math.random() * 0.7;
+          }
+        }
+        let html = '';
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const i = life[r][c];
+            const ch = grid[r][c];
+            if (i === 0) {
+              html += ' ';
+            } else if (i > 5) {
+              html += `<span class="head">${ch}</span>`;
+            } else if (i > 3) {
+              html += `<span class="bright">${ch}</span>`;
+            } else if (i > 1) {
+              html += `<span class="dim">${ch}</span>`;
+            } else {
+              html += `<span class="faint">${ch}</span>`;
+            }
+          }
+          html += '\n';
+        }
+        el.innerHTML = html;
+      }
+      timer = setInterval(tick, 80);
+      tick();
+    }
+
+    function run(raw) {
+      dismissHint();
+      const line = (raw || '').trim();
+
+      const done = document.createElement('div');
+      done.className = 'prompt prompt--done';
+      done.innerHTML =
+        promptHeadHTML + '<div class="prompt-cmd"><span class="cmd-echo"></span></div>';
+      done.querySelector('.cmd-echo').textContent = line;
+      history.appendChild(done);
+
+      if (line) {
+        past.unshift(line);
+        pastIdx = -1;
+      }
+      input.textContent = '';
+
+      if (!line) return;
+
+      const [cmd, ...args] = line.split(/\s+/);
+      const arg = args.join(' ');
+
+      switch (cmd.toLowerCase()) {
+        case 'help':
+          print(
+            [
+              '<span class="muted">available commands:</span>',
+              '  <span class="k">help</span>          show this list',
+              '  <span class="k">about</span>         who is this guy',
+              '  <span class="k">home</span>          → /',
+              '  <span class="k">writing</span>       → /posts',
+              '  <span class="k">projects</span>      → /projects',
+              '  <span class="k">resume</span>        → /resume',
+              '  <span class="k">theme</span> [dark|light]  toggle or set',
+              '  <span class="k">github</span>        open github profile',
+              '  <span class="k">linkedin</span>      open linkedin',
+              '  <span class="k">date</span>          print the date',
+              '  <span class="k">echo</span> &lt;text&gt;    echo back',
+              '  <span class="k">fortune</span>       quote of the moment',
+              '  <span class="k">matrix</span>        wake up, neo',
+              '  <span class="k">clear</span>         clear the screen',
+            ].join('\n'),
+          );
+          return;
+
+        case 'clear':
+          history.innerHTML = '';
+          return;
+
+        case 'about':
+        case 'whoami':
+          print(
+            [
+              '<span class="amber">richard_zimring</span> <span class="muted">::</span> software_engineer(ai, sports)',
+              '',
+              'leading <span class="amber">Maven</span> at Sportradar — a generative AI',
+              'sports research platform used on-air during the',
+              '2025 World Series and 2026 Super Bowl.',
+              '',
+              'previously: crypto-market research at Kellogg, CS at Northwestern.',
+            ].join('\n'),
+          );
+          return;
+
+        case 'writing':
+        case 'posts':
+        case 'ls':
+          go('/posts/');
+          return;
+
+        case 'projects':
+          go('/projects/');
+          return;
+
+        case 'resume':
+        case 'cv':
+          go('/resume/');
+          return;
+
+        case 'home':
+          go('/');
+          return;
+
+        case 'cd':
+          if (!arg || arg === '~' || arg === '/') {
+            go('/');
+          } else if (arg === '~/writing' || arg === 'writing' || arg === '~/posts') {
+            go('/posts/');
+          } else if (arg === '~/projects' || arg === 'projects') {
+            go('/projects/');
+          } else if (arg === '~/resume' || arg === 'resume') {
+            go('/resume/');
+          } else if (arg === '..') {
+            go('/');
+          } else {
+            print(`<span class="rose">cd:</span> no such directory: ${esc(arg)}`);
+          }
+          return;
+
+        case 'github':
+          window.open('https://github.com/richardzimring', '_blank', 'noopener');
+          print('<span class="amber">↗</span> github.com/richardzimring');
+          return;
+
+        case 'linkedin':
+          window.open('https://linkedin.com/in/richardzimring', '_blank', 'noopener');
+          print('<span class="amber">↗</span> linkedin.com/in/richardzimring');
+          return;
+
+        case 'theme': {
+          const cur = document.documentElement.getAttribute('data-theme');
+          const next = arg === 'dark' || arg === 'light' ? arg : cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch (_) {}
+          print(`<span class="muted">theme →</span> <span class="amber">${next}</span>`);
+          return;
+        }
+
+        case 'date':
+          print(new Date().toString());
+          return;
+
+        case 'echo':
+          print(esc(arg));
+          return;
+
+        case 'sudo':
+          print('<span class="rose">nice try.</span>');
+          return;
+
+        case 'matrix':
+          runMatrix(8000);
+          return;
+
+        case 'fortune':
+        case 'quote':
+          printFortune();
+          return;
+
+        default:
+          print(`<span class="rose">command not found:</span> ${esc(cmd)}`);
+      }
+    }
+  })();
+</script>

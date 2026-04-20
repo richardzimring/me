@@ -583,6 +583,48 @@ a:hover {
   border-radius: 50%;
   position: relative;
   z-index: 2;
+  animation: node-pulse 2.4s ease-in-out infinite;
+}
+.git-entry:nth-child(2) .git-graph .node {
+  animation-delay: 0.3s;
+}
+.git-entry:nth-child(3) .git-graph .node {
+  animation-delay: 0.6s;
+}
+.git-entry:nth-child(4) .git-graph .node {
+  animation-delay: 0.9s;
+}
+.git-entry:nth-child(5) .git-graph .node {
+  animation-delay: 1.2s;
+}
+.git-entry:nth-child(6) .git-graph .node {
+  animation-delay: 1.5s;
+}
+.git-entry:nth-child(n + 7) .git-graph .node {
+  animation-delay: 1.8s;
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(242, 185, 87, 0),
+      0 0 0 0 rgba(242, 185, 87, 0);
+    opacity: 0.85;
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(242, 185, 87, 0.22),
+      0 0 6px 1px rgba(242, 185, 87, 0.2);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .git-graph .node,
+  .timeline-dot--current {
+    animation: none;
+  }
 }
 .git-graph .line {
   position: absolute;
@@ -726,33 +768,6 @@ a:hover {
   letter-spacing: 0.06em;
 }
 
-/* Word of the day variant — same frame, different content */
-.fortune .word-term {
-  font-family: var(--font-serif);
-  font-style: normal;
-  font-weight: 500;
-  font-size: var(--text-xl);
-  line-height: 1.2;
-  color: var(--text);
-  margin: 0 0 var(--space-sm);
-}
-.fortune .word-pos {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: var(--text-sm);
-  color: var(--muted);
-  margin-left: 10px;
-}
-.fortune .word-def {
-  font-family: var(--font-serif);
-  font-size: var(--text-md);
-  font-style: normal;
-  line-height: 1.55;
-  color: var(--text-2);
-  max-width: 64ch;
-}
-
 /* ==============================================================
    Blinking cursor
    ============================================================== */
@@ -774,6 +789,118 @@ a:hover {
   100% {
     opacity: 0;
   }
+}
+
+/* ==============================================================
+   Interactive terminal — trailing prompt accepts input
+   ============================================================== */
+.terminal {
+  cursor: text;
+}
+.terminal a {
+  cursor: pointer;
+}
+.cmd-history {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+.cmd-history .prompt--done {
+  margin-bottom: 2px;
+}
+.cmd-echo {
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.cmd-out {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--text);
+  white-space: pre-wrap;
+  padding: 0 0 10px 0;
+  margin-left: 0;
+}
+.cmd-out .muted {
+  color: var(--muted);
+}
+.cmd-out .amber {
+  color: var(--amber);
+}
+.cmd-out .rose {
+  color: var(--rose);
+}
+.cmd-out .k {
+  color: var(--amber);
+}
+
+/* Matrix rain — `matrix` command */
+.cmd-out.matrix-rain {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: pre;
+  padding: 6px 0 12px;
+  user-select: none;
+}
+.cmd-out.matrix-rain .head {
+  color: #fff;
+  text-shadow: 0 0 6px var(--amber);
+}
+.cmd-out.matrix-rain .bright {
+  color: var(--amber);
+}
+.cmd-out.matrix-rain .dim {
+  color: color-mix(in srgb, var(--amber) 55%, transparent);
+}
+.cmd-out.matrix-rain .faint {
+  color: color-mix(in srgb, var(--amber) 25%, transparent);
+}
+
+.cmd-input {
+  display: inline-block;
+  outline: none;
+  min-width: 1px;
+  color: var(--text);
+  font-family: inherit;
+  caret-color: transparent;
+  white-space: pre;
+  word-break: break-all;
+}
+.cmd-input::selection {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+/* Hide the blinking cursor visually once input has focus — the contenteditable
+   caret would otherwise compete with the amber block. */
+.prompt--active .cursor {
+  transition: opacity 120ms ease;
+}
+.prompt--active:focus-within .cmd-input + .cursor {
+  /* keep blinking at the end of typed text */
+}
+.prompt--active:not(:focus-within) .cmd-input:empty::before {
+  content: '';
+}
+
+.cmd-hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin-top: 8px;
+  padding-left: 2px;
+  opacity: 0.7;
+  transition: opacity 160ms ease;
+}
+.cmd-hint .k {
+  color: var(--amber);
+}
+.terminal:focus-within .cmd-hint,
+.terminal:hover .cmd-hint {
+  opacity: 1;
 }
 
 /* ==============================================================
@@ -1290,6 +1417,9 @@ a:hover {
   position: relative;
   z-index: 2;
 }
+.timeline-dot--current {
+  animation: node-pulse 2.4s ease-in-out infinite;
+}
 .timeline-line {
   position: absolute;
   left: 4px;
@@ -1423,6 +1553,9 @@ a:hover {
 .whoami {
   animation: rise 0.5s 0.08s both;
 }
+.currently {
+  animation: rise 0.5s 0.14s both;
+}
 .section:nth-of-type(1) {
   animation: rise 0.5s 0.18s both;
 }
@@ -1437,6 +1570,9 @@ a:hover {
 }
 .fortune {
   animation: rise 0.5s 0.58s both;
+}
+.terminal {
+  animation: rise 0.5s 0.68s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
