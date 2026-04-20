@@ -1,6 +1,7 @@
 ---
 export interface Role {
   title: string;
+  team?: string;
   period: string;
   bullets: string[];
 }
@@ -34,8 +35,18 @@ const { company, location, dates, roles } = Astro.props;
           </div>
           <div class="timeline-body">
             <div class="timeline-role-header">
-              <p class="timeline-role-title">{role.title}</p>
-              <p class="timeline-role-period">{role.period}</p>
+              <p class="timeline-role-title">
+                {role.title}
+                {role.team && (
+                  <span class="timeline-role-team timeline-role-team--inline"> · {role.team}</span>
+                )}
+              </p>
+              <p class="timeline-role-period">
+                {role.team && (
+                  <span class="timeline-role-team timeline-role-team--stacked">{role.team} · </span>
+                )}
+                {role.period}
+              </p>
             </div>
             {role.bullets.length > 0 && (
               <ul class="timeline-bullets">
