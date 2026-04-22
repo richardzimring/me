@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PromptHead from '../../components/PromptHead.astro';
 import Terminal from '../../components/Terminal.astro';
 import { projects } from '../../data/projects';
 ---
@@ -13,10 +14,7 @@ import { projects } from '../../data/projects';
   ogImage="/og/projects.png"
 >
   <div class="prompt">
-    <div class="prompt-head">
-      <span class="user">richard</span><span class="sep">@</span><span class="user">zimring</span
-      ><span class="sep">:</span><span class="path">~/projects</span><span class="sep"> $</span>
-    </div>
+    <PromptHead path="~/projects" />
     <div class="prompt-cmd">
       <span class="cmd">git log</span>
       <span class="flag">--oneline</span>
