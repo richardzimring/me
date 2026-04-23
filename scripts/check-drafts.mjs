@@ -55,13 +55,17 @@ for (const file of allStaged) {
 }
 
 if (offendingPosts.length || offendingImages.length) {
-  console.error('\n\u2717 Refusing to commit draft content:\n');
   const all = [...offendingPosts, ...offendingImages];
-  for (const f of all) console.error(`  - ${f}`);
-  console.error(
-    '\nSet `draft: false` in the post frontmatter to publish, or unstage with:\n  git restore --staged ' +
-      all.join(' ') +
-      '\n',
+  const r = spawnSync('git', ['restore', '--staged', '--', ...all], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (r.status !== 0) {
+    console.error(r.stderr || 'git restore --staged failed');
+    process.exit(r.status || 1);
+  }
+  console.warn('\n\u26a0 Unstaged draft content (not included in this commit):');
+  for (const f of all) console.warn(`  - ${f}`);
+  console.warn(
+    '\nSet `draft: false` in the post frontmatter once you are ready to commit those files.\n',
   );
-  process.exit(1);
 }
