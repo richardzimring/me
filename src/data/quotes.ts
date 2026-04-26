@@ -5,6 +5,10 @@ export interface Quote {
 
 export const quotes: Quote[] = [
   {
+    text: "There are no solutions; there are only tradeoffs. [...] But you try to get the best trade-off you can get, and that's all you can hope for.",
+    author: 'Thomas Sowell',
+  },
+  {
     text: 'Once men turned their thinking over to machines in the hope that this would set them free. But that only permitted other men with machines to enslave them.',
     author: 'Dune',
   },
