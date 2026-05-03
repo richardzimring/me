@@ -12,7 +12,7 @@ const fortuneData = JSON.stringify({ quotes });
 
 <script is:inline set:html={`window.__RZ_FORTUNE__ = ${fortuneData};`} />
 
-<section class="terminal" id="terminal" style="margin-top: 32px;">
+<section class="terminal" id="terminal" data-pwd={path} style="margin-top: 32px;">
   <div class="cmd-history" aria-live="polite"></div>
   <div class="prompt prompt--active" id="prompt-active">
     <PromptHead path={path} />
@@ -37,6 +37,7 @@ const fortuneData = JSON.stringify({ quotes });
   (function () {
     const term = document.getElementById('terminal');
     if (!term) return;
+    const pwd = term.getAttribute('data-pwd') || '~';
     const input = term.querySelector('.cmd-input');
     const history = term.querySelector('.cmd-history');
     const activePrompt = term.querySelector('#prompt-active');
@@ -290,6 +291,8 @@ const fortuneData = JSON.stringify({ quotes });
               '  <span class="k">help</span>          show this list',
               '  <span class="k">about</span>         who is this guy',
               '  <span class="k">home</span>          → /',
+              '  <span class="k">pwd</span>           print working directory',
+              '  <span class="k">history</span>       command history',
               '  <span class="k">writing</span>       → /posts',
               '  <span class="k">projects</span>      → /projects',
               '  <span class="k">resume</span>        → /resume',
@@ -326,7 +329,6 @@ const fortuneData = JSON.stringify({ quotes });
 
         case 'writing':
         case 'posts':
-        case 'ls':
           go('/posts/');
           return;
 
@@ -342,6 +344,23 @@ const fortuneData = JSON.stringify({ quotes });
         case 'home':
           go('/');
           return;
+
+        case 'pwd':
+          print(esc(pwd));
+          return;
+
+        case 'history': {
+          if (past.length === 0) {
+            print('<span class="muted">(no commands yet)</span>');
+            return;
+          }
+          const lines = [];
+          for (let i = past.length - 1; i >= 0; i--) {
+            lines.push(`  ${String(past.length - i).padStart(4, ' ')}  ${esc(past[i])}`);
+          }
+          print(lines.join('\n'));
+          return;
+        }
 
         case 'cd':
           if (!arg || arg === '~' || arg === '/') {
