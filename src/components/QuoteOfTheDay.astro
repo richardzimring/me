@@ -1,15 +1,18 @@
 ---
 import { quotes } from '../data/quotes';
-
-const today = new Date();
-const dayIndex = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
-const quote = quotes[dayIndex % quotes.length];
 ---
 
 <section class="fortune">
   <div class="fortune-label">quote-of-the-day.txt</div>
   <blockquote>
-    <p>{quote.text}</p>
+    <p id="qotd-text"></p>
   </blockquote>
-  <cite>— {quote.author}</cite>
+  <cite id="qotd-author"></cite>
 </section>
+
+<script define:vars={{ quotes }}>
+  const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+  const quote = quotes[dayIndex % quotes.length];
+  document.getElementById('qotd-text').textContent = quote.text;
+  document.getElementById('qotd-author').textContent = '— ' + quote.author;
+</script>
