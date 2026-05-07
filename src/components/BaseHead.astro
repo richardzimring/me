@@ -45,7 +45,6 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 <script is:inline>
   (function () {
     const stored = localStorage.getItem('theme');
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', stored || preferred);
+    document.documentElement.setAttribute('data-theme', stored || 'light');
   })();
 </script>

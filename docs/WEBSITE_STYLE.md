@@ -82,6 +82,6 @@ All colors are CSS custom properties defined in `src/styles/global.css`.
 ## Dark/Light Mode
 
 - Toggle state is stored in `localStorage` under the key `theme`
-- Falls back to `prefers-color-scheme` media query
+- Defaults to light mode when no preference is stored (system `prefers-color-scheme` is intentionally ignored)
 - A blocking inline script in `<head>` prevents flash of wrong theme on load
 - The toggle button is a sun/moon SVG icon in the app bar
