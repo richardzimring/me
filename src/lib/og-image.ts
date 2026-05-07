@@ -46,7 +46,7 @@ function span(children: string, style: Record<string, unknown>) {
   };
 }
 
-export async function renderOgPng(spec: OgSpec): Promise<Buffer> {
+export async function renderOgPng(spec: OgSpec): Promise<Uint8Array<ArrayBuffer>> {
   const fonts = await loadOgFonts();
   const titleSize = spec.title.length > 48 ? 52 : spec.title.length > 28 ? 64 : 76;
 
@@ -226,5 +226,8 @@ export async function renderOgPng(spec: OgSpec): Promise<Buffer> {
   };
 
   const svg = await satori(markup as never, { width: 1200, height: 630, fonts });
-  return sharp(Buffer.from(svg)).png().toBuffer();
+  const buf = await sharp(Buffer.from(svg)).png().toBuffer();
+  const out = new Uint8Array(buf.byteLength);
+  out.set(buf);
+  return out;
 }
