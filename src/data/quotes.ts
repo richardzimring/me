@@ -76,4 +76,8 @@ export const quotes: Quote[] = [
     text: 'Nothing is intrinsically boring. Indeed, boredom is simply a lack of attention.',
     author: 'Sam Harris',
   },
+  {
+    text: "I connect with everything, but I'm not attached to anything.",
+    author: 'Alysa Liu',
+  },
 ];
