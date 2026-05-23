@@ -295,6 +295,7 @@ const fortuneData = JSON.stringify({ quotes });
               '  <span class="k">history</span>       command history',
               '  <span class="k">writing</span>       → /posts',
               '  <span class="k">projects</span>      → /projects',
+              '  <span class="k">library</span>       → /library',
               '  <span class="k">resume</span>        → /resume',
               '  <span class="k">theme</span> [dark|light]  toggle or set',
               '  <span class="k">github</span>        open github profile',
@@ -336,6 +337,10 @@ const fortuneData = JSON.stringify({ quotes });
           go('/projects/');
           return;
 
+        case 'library':
+          go('/library/');
+          return;
+
         case 'resume':
         case 'cv':
           go('/resume/');
@@ -369,6 +374,8 @@ const fortuneData = JSON.stringify({ quotes });
             go('/posts/');
           } else if (arg === '~/projects' || arg === 'projects') {
             go('/projects/');
+          } else if (arg === '~/library' || arg === 'library') {
+            go('/library/');
           } else if (arg === '~/resume' || arg === 'resume') {
             go('/resume/');
           } else if (arg === '..') {

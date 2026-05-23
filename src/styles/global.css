@@ -727,6 +727,89 @@ a:hover {
 }
 
 /* ==============================================================
+   Library / bibliography (/library/)
+   — section headings in mono (matches the resume `## HEADING` pattern),
+     entries as serif italic title + dotted leader + mono author + ↗.
+   ============================================================== */
+.bib {
+  padding: 0;
+}
+.bib-group {
+  margin-bottom: var(--space-lg);
+  scroll-margin-top: var(--space-2xl);
+}
+.bib-group:last-child {
+  margin-bottom: 0;
+}
+.bib-heading {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 var(--space-sm);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.bib-heading::before {
+  content: '## ';
+  color: var(--muted);
+}
+.bib-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  color: var(--text);
+}
+.bib-title-block {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+.bib-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--text);
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variation-settings: 'opsz' 20;
+  transition: var(--t-fast);
+}
+.bib-row:hover .bib-title {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+.bib-leader {
+  flex: 1;
+  border-bottom: 1px dotted color-mix(in srgb, var(--muted-2) 30%, var(--hair) 70%);
+  transform: translateY(-4px);
+  min-width: 24px;
+}
+.bib-by {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.bib-open {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted-2);
+  transition: var(--t-fast);
+}
+.bib-row:hover .bib-open {
+  color: var(--mint);
+}
+
+/* ==============================================================
    Fortune — quote/word of the day
    ============================================================== */
 .fortune {
@@ -1686,6 +1769,24 @@ a:hover {
   .kvlist {
     padding: 10px 14px;
     word-break: break-word;
+  }
+
+  /* Library — drop leader dots; let title wrap; soften metadata.
+     Without the leader pushing the author over, we'd lose right-alignment;
+     space-between keeps title left, author flush right (matches desktop). */
+  .bib-title-block {
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .bib-title {
+    font-size: var(--text-md);
+    white-space: normal;
+  }
+  .bib-leader {
+    display: none;
+  }
+  .bib-by {
+    font-size: 10.5px;
   }
 }
 

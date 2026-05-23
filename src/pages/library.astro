@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PromptHead from '../components/PromptHead.astro';
+import Terminal from '../components/Terminal.astro';
+import { library, kindOrder, kindLabel, type LibraryItemKind } from '../data/library';
+
+// Group items by kind, preserving declaration order within each kind.
+const grouped = kindOrder
+  .map((kind) => ({
+    kind,
+    items: library.filter((item) => item.kind === kind),
+  }))
+  .filter((g) => g.items.length > 0);
+---
+
+<BaseLayout
+  title="Richard Zimring — Library"
+  description="Books, films, essays, and other recommendations."
+  active="library"
+  file="library.bib"
+  path="/library/"
+>
+  <div class="prompt">
+    <PromptHead path="~/library" />
+    <div class="prompt-cmd">
+      <span class="cmd">cat</span>
+      <span class="arg">library.bib</span>
+    </div>
+  </div>
+
+  <div class="bib">
+    {
+      grouped.map((g) => (
+        <section class="bib-group" id={kindLabel[g.kind as LibraryItemKind]}>
+          <h2 class="bib-heading">{kindLabel[g.kind as LibraryItemKind]}</h2>
+          {g.items.map((item) => (
+            <a class="bib-row" href={item.href}>
+              <span class="bib-title-block">
+                <span class="bib-title">{item.title}</span>
+                <span class="bib-leader" aria-hidden="true" />
+                {item.by && <span class="bib-by">{item.by}</span>}
+              </span>
+              <span class="bib-open" aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          ))}
+        </section>
+      ))
+    }
+  </div>
+
+  <Terminal path="~/library" />
+</BaseLayout>

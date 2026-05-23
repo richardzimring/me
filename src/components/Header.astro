@@ -3,7 +3,7 @@ import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   path?: string;
-  active?: 'index' | 'writing' | 'projects' | 'resume' | null;
+  active?: 'index' | 'writing' | 'projects' | 'library' | 'resume' | null;
 }
 
 const { path = '~', active = null } = Astro.props;
@@ -23,6 +23,7 @@ const { path = '~', active = null } = Astro.props;
       <a href="/" class={`tab-essential${active === 'index' ? ' active' : ''}`}>index</a>
       <a href="/posts/" class={active === 'writing' ? 'active' : ''}>writing</a>
       <a href="/projects/" class={active === 'projects' ? 'active' : ''}>projects</a>
+      <a href="/library/" class={active === 'library' ? 'active' : ''}>library</a>
       <a href="/resume/" class={`tab-essential${active === 'resume' ? ' active' : ''}`}>resume</a>
     </nav>
     <ThemeToggle />
