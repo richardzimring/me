@@ -80,4 +80,8 @@ export const quotes: Quote[] = [
     text: "I connect with everything, but I'm not attached to anything.",
     author: 'Alysa Liu',
   },
+  {
+    text: 'Before I started traveling, I thought that the human race as a whole would turn on itself at any given moment [...] But I think that, on balance, the world is filled with people doing the best they can, who love their kids, would like to put on a clean shirt every morning and live their lives with a little dignity and have access to food and water, and hope. Just like everybody else.',
+    author: 'Anthony Bourdain',
+  },
 ];
