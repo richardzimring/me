@@ -130,12 +130,6 @@ export const library: LibraryItem[] = [
     href: 'https://www.youtube.com/watch?v=1hvPTqswJn4',
   },
   {
-    title: 'introducing kendrick lamar to an italian poet',
-    kind: 'video',
-    by: 'GUS',
-    href: 'https://www.youtube.com/watch?v=q5dqCeNEIFU',
-  },
-  {
     title: 'Facing Eviction',
     kind: 'doc',
     by: 'FRONTLINE',
