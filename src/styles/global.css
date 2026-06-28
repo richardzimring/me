@@ -396,6 +396,7 @@ a:hover {
   line-height: 1.7;
   color: var(--text-2);
   max-width: 72ch;
+  text-wrap: pretty;
 }
 .whoami-body p + p {
   margin-top: var(--space-sm);
@@ -678,6 +679,7 @@ a:hover {
   font-size: var(--text-sm);
   line-height: 1.6;
   max-width: 66ch;
+  text-wrap: pretty;
 }
 .git-stack {
   margin-top: 8px;
@@ -1027,6 +1029,7 @@ a:hover {
    Theme toggle
    ============================================================== */
 .theme-toggle {
+  position: relative;
   background: none;
   border: 1px solid var(--rule);
   color: var(--muted);
@@ -1035,28 +1038,50 @@ a:hover {
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: var(--t-fast);
+  display: grid;
+  place-items: center;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.12s ease;
 }
 .theme-toggle:hover {
   color: var(--text);
   border-color: var(--muted);
 }
+/* Tactile feedback on press */
+.theme-toggle:active {
+  transform: scale(0.96);
+}
+/* Extend the hit area to ~40×40 without growing the visible chrome or
+   overlapping the adjacent tabs (gap to tabs is var(--space-md) = 14px). */
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  inset: -11px -6px;
+}
 .theme-toggle svg {
   width: 12px;
   height: 12px;
+  /* Stack both icons in the same grid cell so they can cross-fade */
+  grid-area: 1 / 1;
+  transition:
+    opacity 0.3s cubic-bezier(0.2, 0, 0, 1),
+    scale 0.3s cubic-bezier(0.2, 0, 0, 1),
+    filter 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
+/* Both icons stay in the DOM; the inactive one fades/scales/blurs out */
 .icon-sun,
 .icon-moon {
-  display: none;
+  opacity: 0;
+  scale: 0.25;
+  filter: blur(4px);
 }
-[data-theme='light'] .theme-toggle .icon-moon {
-  display: block;
-}
+[data-theme='light'] .theme-toggle .icon-moon,
 [data-theme='dark'] .theme-toggle .icon-sun {
-  display: block;
+  opacity: 1;
+  scale: 1;
+  filter: blur(0);
 }
 
 /* ==============================================================
@@ -1144,6 +1169,7 @@ a:hover {
 }
 .prose p {
   margin-bottom: var(--space-lg);
+  text-wrap: pretty;
 }
 .prose a {
   color: var(--text);
@@ -1413,6 +1439,7 @@ a:hover {
 }
 .resume p {
   margin-bottom: var(--space-md);
+  text-wrap: pretty;
 }
 .resume ul {
   margin: 0 0 var(--space-md);

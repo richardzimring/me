@@ -49,6 +49,12 @@ export const library: LibraryItem[] = [
     href: 'https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow',
   },
   {
+    title: 'Designing Data-Intensive Applications',
+    kind: 'book',
+    by: 'Martin Kleppmann',
+    href: 'https://dataintensive.net/',
+  },
+  {
     title: 'Hamburger America',
     kind: 'doc',
     by: 'George Motz',

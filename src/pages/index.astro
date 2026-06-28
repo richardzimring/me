@@ -4,12 +4,9 @@ import PromptHead from '../components/PromptHead.astro';
 import QuoteOfTheDay from '../components/QuoteOfTheDay.astro';
 import Terminal from '../components/Terminal.astro';
 import { projects } from '../data/projects';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../lib/posts';
 
-const isDev = import.meta.env.DEV;
-const allPosts = (await getCollection('posts'))
-  .filter((post) => isDev || !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allPosts = await getPublishedPosts();
 
 const formatDate = (d: Date) => d.toISOString().slice(0, 10); // YYYY-MM-DD for the ls output
 ---
