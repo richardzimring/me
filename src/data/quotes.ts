@@ -33,20 +33,8 @@ export const quotes: Quote[] = [
     author: 'Geoffrey Hinton',
   },
   {
-    text: 'That is the purpose for which you are called hither. Called, I say, though I have not called you to me, strangers from distant lands. You have come and are here met, in this very nick of time, by chance as it may seem. Yet it is not so. Believe rather that it is so ordered that we, who sit here, and none others, must now find counsel for the peril of the world.',
-    author: 'Elrond',
-  },
-  {
     text: 'It is wisdom to recognize necessity when all other courses have been weighed, though as folly it may appear to those who cling to false hope.',
     author: 'Gandalf',
-  },
-  {
-    text: 'He that breaks a thing to find out what it is, has left the path of wisdom.',
-    author: 'Gandalf',
-  },
-  {
-    text: 'Oft in lies truth is hidden.',
-    author: 'Glorfindel',
   },
   {
     text: 'I am as happy now as I have ever been, and that is saying a great deal.',
@@ -83,5 +71,9 @@ export const quotes: Quote[] = [
   {
     text: 'Before I started traveling, I thought that the human race as a whole would turn on itself at any given moment [...] But I think that, on balance, the world is filled with people doing the best they can, who love their kids, would like to put on a clean shirt every morning and live their lives with a little dignity and have access to food and water, and hope. Just like everybody else.',
     author: 'Anthony Bourdain',
+  },
+  {
+    text: "Most people are so upset when they use the word wrapper. It feels so derogatory; you feel insulted or something. But look, everyone's a wrapper. OpenAI is an Azure and Nvidia wrapper. Or Venture capital is a wrapper over people who actually have money that are giving to VCs to invest. You can joke Nvidia is a TSMC wrapper, because the fabrication doesn't happen inside Nvidia. Netflix runs on AWS, so it's an AWS wrapper. So there are wrappers at all levels. It's just you don't realize it because they've given you so much value that you don't care.",
+    author: 'Aravind Srinivas',
   },
 ];
