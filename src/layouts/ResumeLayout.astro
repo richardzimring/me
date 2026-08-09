@@ -1,29 +1,19 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import PromptHead from '../components/PromptHead.astro';
-import Terminal from '../components/Terminal.astro';
 ---
 
-<BaseLayout
-  title="Richard Zimring"
-  description="Resume"
-  ogImage="/og/resume.png"
-  active="resume"
-  file="resume.mdx"
-  path="/resume/"
->
-  <div class="prompt">
-    <PromptHead />
-    <div class="prompt-cmd"><span class="cmd">cat</span> <span class="arg">resume.mdx</span></div>
-  </div>
-
-  <article class="resume prose">
-    <h1>Richard Zimring</h1>
-    <p class="post-description" style="margin-bottom: var(--space-xl);">
-      Software engineer · Minneapolis, MN
+<BaseLayout title="Resume · Richard Zimring" description="Resume" ogImage="/og/resume.png" prose>
+  <article class="resume">
+    <p class="resume-eyebrow">Resume</p>
+    <h1 class="entry-title">Richard Zimring</h1>
+    <p class="entry-dek">Senior software engineer · Minneapolis, MN</p>
+    <p class="entry-meta">
+      <a href="https://github.com/richardzimring">GitHub</a>
+      <span class="entry-meta-sep" aria-hidden="true">·</span>
+      <a href="https://linkedin.com/in/richardzimring">LinkedIn</a>
     </p>
-    <slot />
+    <div class="resume-body">
+      <slot />
+    </div>
   </article>
-
-  <Terminal path="~/resume" />
 </BaseLayout>

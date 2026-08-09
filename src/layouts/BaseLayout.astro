@@ -1,19 +1,24 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Statusbar from '../components/Statusbar.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
-  path?: string;
-  active?: 'index' | 'writing' | 'projects' | 'library' | 'resume' | null;
-  file?: string;
+  /** When true, hide the site-name link (home uses h1 as the name). */
+  home?: boolean;
+  /** Wider column for long-form reading. */
+  prose?: boolean;
 }
 
-const { title, description, ogImage, path = '~', active = null, file = 'index.html' } = Astro.props;
+const { title, description, ogImage, home = false, prose = false } = Astro.props;
+
+const barClass = ['site-bar', home && 'site-bar--home', prose && 'site-bar--prose']
+  .filter(Boolean)
+  .join(' ');
+const pageClass = ['page', prose && 'page--prose'].filter(Boolean).join(' ');
 ---
 
 <!doctype html>
@@ -22,13 +27,19 @@ const { title, description, ogImage, path = '~', active = null, file = 'index.ht
     <BaseHead title={title} description={description} ogImage={ogImage} />
   </head>
   <body>
-    <div class="window">
-      <Header path={path} active={active} />
-      <main class="pane">
-        <slot />
-      </main>
-      <Statusbar file={file} />
-    </div>
+    <header class={barClass}>
+      {
+        !home && (
+          <a class="site-name" href="/">
+            Richard Zimring
+          </a>
+        )
+      }
+      <ThemeToggle />
+    </header>
+    <main class={pageClass}>
+      <slot />
+    </main>
     <script>
       document.querySelectorAll('a[href]').forEach((a) => {
         const href = (a as HTMLAnchorElement).href;
@@ -39,7 +50,7 @@ const { title, description, ogImage, path = '~', active = null, file = 'index.ht
             a.setAttribute('rel', 'noopener noreferrer');
           }
         } catch {
-          // malformed href — leave as-is
+          // malformed href · leave as-is
         }
       });
     </script>

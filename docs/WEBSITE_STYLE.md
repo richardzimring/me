@@ -1,87 +1,49 @@
 # Style Guide
 
-Minimalist, typography-first, editorial aesthetic.
+Bare aesthetic: typography-first, minimal chrome, light/dark themes.
 
 ## Color Tokens
 
-All colors are CSS custom properties defined in `src/styles/global.css`.
-
-### Semantic tokens (light/dark values defined per theme)
-
-| Token                       | Usage                    |
-| --------------------------- | ------------------------ |
-| `--color-bg`                | Page background          |
-| `--color-bg-alt`            | Code blocks, alt bg      |
-| `--color-text`              | Body text                |
-| `--color-text-secondary`    | Subtitles, descriptions  |
-| `--color-text-tertiary`     | Dates, muted text        |
-| `--color-heading`           | Headings                 |
-| `--color-link`              | Link text                |
-| `--color-link-hover`        | Link hover state         |
-| `--color-border`            | Borders, dividers        |
-| `--color-hr`                | Horizontal rules         |
-| `--color-code-bg`           | Inline and block code bg |
-| `--color-blockquote-border` | Blockquote left border   |
-| `--color-blockquote-text`   | Blockquote text          |
+| Token        | Usage                         |
+| ------------ | ----------------------------- |
+| `--bg`       | Page background               |
+| `--text`     | Primary text and body copy    |
+| `--muted`    | Soft UI (site name, eyebrows) |
+| `--meta`     | Dates, labels, TOC            |
+| `--rule`     | Hairline dividers             |
+| `--code-bg`  | Inline and block code         |
+| `--media-bg` | Video placeholder surface     |
 
 ## Typography
 
-- **Serif**: `Newsreader` (Google Fonts) — used for headings and body text; fallbacks: Georgia, Times New Roman, serif
-- **Sans**: system UI stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, Helvetica, Arial, sans-serif)
-- **Monospace**: SF Mono, Fira Code, Fira Mono, Roboto Mono
-- **Base size**: 20px (`--text-base: 1.25rem`)
-- **Line heights**: 1.2 tight (`--leading-tight`), 1.5 normal (`--leading-normal`), 1.7 relaxed (`--leading-relaxed`)
-- **Max prose width**: 680px (`--max-width-prose`)
+Two registers only:
 
-### Scale
+- **Serif (Newsreader):** UI lists, titles, body
+- **Sans (system):** meta — dates, labels, stack, TOC
 
-| Token         | Size | Usage              |
-| ------------- | ---- | ------------------ |
-| `--text-xs`   | 13px | Footer, fine print |
-| `--text-sm`   | 15px | Dates, TOC, meta   |
-| `--text-base` | 20px | Body text          |
-| `--text-lg`   | 20px | Large body, h4     |
-| `--text-xl`   | 24px | h3, section heads  |
-| `--text-2xl`  | 32px | h2                 |
-| `--text-3xl`  | 44px | Post titles        |
-| `--text-4xl`  | 56px | Hero h1            |
+| Token            | Size                          | Use                        |
+| ---------------- | ----------------------------- | -------------------------- |
+| `--text-meta`    | 0.75rem                       | Dates, labels, chrome      |
+| `--text-ui`      | 1.05rem                       | Lists, site name           |
+| `--text-body`    | 1.125rem                      | Bio, prose, project copy   |
+| `--text-page`    | 1.2rem                        | List-page titles           |
+| `--text-display` | `clamp(1.65rem, 4vw, 2.1rem)` | Post / project / resume h1 |
+| `--text-section` | 1.25rem                       | Prose h2                   |
 
 ## Spacing
 
-| Token         | Value   |
-| ------------- | ------- |
-| `--space-xs`  | 0.25rem |
-| `--space-sm`  | 0.5rem  |
-| `--space-md`  | 1rem    |
-| `--space-lg`  | 1.5rem  |
-| `--space-xl`  | 2.5rem  |
-| `--space-2xl` | 4rem    |
-| `--space-3xl` | 6rem    |
+Use `--space-1` … `--space-9`. Page padding: `--page-pad-top` / `--page-pad-x` / `--page-pad-bottom`.
 
 ## Layout
 
-| Token               | Value  | Usage                        |
-| ------------------- | ------ | ---------------------------- |
-| `--max-width-prose` | 680px  | Article/prose content width  |
-| `--max-width-page`  | 680px  | Overall page container width |
-| `--page-padding`    | 1.5rem | Horizontal page padding      |
+- List pages: `--max-width` 480px
+- Reading pages (posts, projects, resume): `--max-width-prose` 640px
+- Links: no underline at rest; underline on hover (including prose)
+- Shared patterns: `.page-title`, `.entry-title`, `.entry-dek`, `.entry-meta`, `.list`, `.list-meta`
+- Detail shells: `.project` (eyebrow + video + stack), `.essay` (eyebrow + body), `.resume` (eyebrow + meta links + body)
 
-## Transitions
+## Dark / Light Mode
 
-- `--transition-color` — smooth `color`, `background-color`, and `border-color` transitions (0.2s ease); applied to body, links, and interactive elements for theme switching
-
-## Component Conventions
-
-- All styling uses CSS custom properties — no hardcoded colors or sizes
-- Dark/light mode is driven by `data-theme` attribute on `<html>`
-- Links are underlined with `text-underline-offset: 3px`
-- No decorative elements — the design relies on typography and whitespace
-- Layouts are centered single-column with generous margins
-- The Table of Contents sidebar is fixed-position and hidden below 1100px viewport width
-
-## Dark/Light Mode
-
-- Toggle state is stored in `localStorage` under the key `theme`
-- Defaults to light mode when no preference is stored (system `prefers-color-scheme` is intentionally ignored)
-- A blocking inline script in `<head>` prevents flash of wrong theme on load
-- The toggle button is a sun/moon SVG icon in the app bar
+- `localStorage` key `theme`
+- Default light
+- Blocking script in `<head>`; toggle in site bar

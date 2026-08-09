@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PromptHead from '../../components/PromptHead.astro';
-import Terminal from '../../components/Terminal.astro';
 import { getPublishedPosts } from '../../lib/posts';
 
 const allPosts = await getPublishedPosts();
@@ -10,58 +8,27 @@ const formatDate = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
 <BaseLayout
-  title="Richard Zimring"
+  title="Writing · Richard Zimring"
   description="Posts and essays"
-  active="writing"
-  file="writing/index.html"
-  path="/writing/"
   ogImage="/og/writing.png"
 >
-  <div class="prompt">
-    <PromptHead path="~/writing" />
-    <div class="prompt-cmd">
-      <span class="cmd">ls</span>
-      <span class="flag">-lht</span>
-      <span class="arg">posts/</span>
-    </div>
-  </div>
+  <h1 class="page-title">Writing</h1>
 
-  {
-    allPosts.length === 0 && (
-      <p style="color: var(--muted); font-family: var(--font-mono);">No posts yet.</p>
-    )
-  }
+  {allPosts.length === 0 && <p class="empty">No posts yet.</p>}
 
   {
     allPosts.length > 0 && (
-      <div class="ls">
-        <div class="ls-head">
-          <div class="date">date</div>
-          <div>title</div>
-          <div class="size">read</div>
-          <div class="perms">perms</div>
-        </div>
+      <ul class="list">
         {allPosts.map((post) => (
-          <a class={`ls-row${post.data.draft ? ' draft' : ''}`} href={`/posts/${post.id}/`}>
-            <div class="date">{formatDate(post.data.date)}</div>
-            <div class="file">
-              <span class="title">{post.id}.mdx</span>
-              {(post.data.description || post.data.title) && (
-                <span class="dek">{post.data.description || post.data.title}</span>
-              )}
-            </div>
-            <div class="size">{post.data.readMinutes}m</div>
-            <div class="perms">-rw-r--r--</div>
-          </a>
+          <li>
+            <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+            <span class="list-meta">
+              {post.data.draft && <span class="draft-label">draft</span>}
+              {formatDate(post.data.date)}
+            </span>
+          </li>
         ))}
-        {allPosts.some((p) => p.data.draft) && (
-          <div class="ls-legend">
-            <span class="star">*</span> unpublished draft
-          </div>
-        )}
-      </div>
+      </ul>
     )
   }
-
-  <Terminal path="~/writing" />
 </BaseLayout>

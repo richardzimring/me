@@ -9,49 +9,42 @@ export interface Role {
 export interface Props {
   company: string;
   location: string;
-  dates: string;
+  dates?: string;
   roles: Role[];
 }
 
 const { company, location, dates, roles } = Astro.props;
 ---
 
-<div class="timeline-employer">
+<div class="resume-employer">
   <div class="resume-entry-header">
     <div class="resume-entry-company-block">
       <span class="resume-entry-company">{company}</span>
       <span class="resume-entry-location">{location}</span>
     </div>
-    <span class="resume-entry-dates">{dates}</span>
+    {dates && <span class="resume-entry-dates">{dates}</span>}
   </div>
 
   <div class="timeline-roles">
     {
       roles.map((role, i) => (
         <div class="timeline-entry">
-          <div class="timeline-track">
+          <div class="timeline-track" aria-hidden="true">
             <div
               class={`timeline-dot${/present/i.test(role.period) ? ' timeline-dot--current' : ''}`}
             />
             {i < roles.length - 1 && <div class="timeline-line" />}
           </div>
           <div class="timeline-body">
-            <div class="timeline-role-header">
-              <p class="timeline-role-title">
+            <div class="resume-role-header">
+              <p class="resume-role-title">
                 {role.title}
-                {role.team && (
-                  <span class="timeline-role-team timeline-role-team--inline"> · {role.team}</span>
-                )}
+                {role.team && <span class="resume-role-team"> · {role.team}</span>}
               </p>
-              <p class="timeline-role-period">
-                {role.team && (
-                  <span class="timeline-role-team timeline-role-team--stacked">{role.team} · </span>
-                )}
-                {role.period}
-              </p>
+              <p class="resume-role-period">{role.period}</p>
             </div>
             {role.bullets.length > 0 && (
-              <ul class="timeline-bullets">
+              <ul>
                 {role.bullets.map((b) => (
                   <li>{b}</li>
                 ))}

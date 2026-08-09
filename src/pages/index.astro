@@ -1,203 +1,52 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PromptHead from '../components/PromptHead.astro';
-import QuoteOfTheDay from '../components/QuoteOfTheDay.astro';
-import Terminal from '../components/Terminal.astro';
 import { projects } from '../data/projects';
 import { getPublishedPosts } from '../lib/posts';
 
 const allPosts = await getPublishedPosts();
 
-const formatDate = (d: Date) => d.toISOString().slice(0, 10); // YYYY-MM-DD for the ls output
+const formatDate = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
-<BaseLayout
-  title="Richard Zimring"
-  description="A personal site"
-  active="index"
-  file="index.html"
-  path="/"
->
-  {/* $ whoami --verbose */}
-  <div class="prompt">
-    <PromptHead />
-    <div class="prompt-cmd">
-      <span class="cmd">whoami</span>
-      <span class="flag">--verbose</span>
-    </div>
-  </div>
+<BaseLayout title="Richard Zimring" description="A personal site" home>
+  <h1 class="page-title page-title--flush">Richard Zimring</h1>
+  <p class="bio">
+    Senior software engineer at <a href="https://sportradar.com">Sportradar</a>, building <a
+      href="https://maven.sportradar.com">Maven</a
+    >. Previously crypto research at <a href="https://kellogg.northwestern.edu">Kellogg</a>, CS at
+    Northwestern.
+  </p>
 
-  <section class="whoami">
-    <span class="whoami-tag">/etc/about.txt</span>
-    <h1>
-      <span class="name">richard_zimring</span><span class="punct"> ::</span>
-      <span class="role"> software_engineer()</span>
-    </h1>
-    <div class="whoami-body">
-      <p>
-        Building <a href="https://maven.sportradar.com">Maven</a> at <a
-          href="https://sportradar.com">Sportradar</a
-        > — a generative AI platform for sports research used on-air during the 2025 World Series and
-        2026 Super Bowl.
-      </p>
-      <p>
-        Previously: crypto-market research at <a href="https://kellogg.northwestern.edu">Kellogg</a
-        >, CS at Northwestern.
-      </p>
-    </div>
-  </section>
-
-  <div class="currently">
-    <span class="currently-tag">/etc/currently.yml</span>
-    <div class="currently-row">
-      <span class="k">building</span><span class="colon">:</span>
-    </div>
-    <div class="currently-nested">
-      <div class="currently-row">
-        <span class="k">agent</span><span class="colon">:</span>
-        <span class="v">architecture · evals · features</span>
-      </div>
-      <div class="currently-row">
-        <span class="k">platform</span><span class="colon">:</span>
-        <span class="v">ui · rest · mcp · slack</span>
-      </div>
-    </div>
-    <div class="currently-row">
-      <span class="k">applying</span><span class="colon">:</span>
-      <span class="v">systems engineering</span>
-    </div>
-    <div class="currently-row">
-      <span class="k">bridging</span><span class="colon">:</span>
-    </div>
-    <div class="currently-item">- product ↔ design ↔ engineering</div>
-    <div class="currently-item">- demo ↔ production</div>
-  </div>
-
-  {/* Writing — ls -lht essays/ */}
   {
     allPosts.length > 0 && (
-      <section class="section">
-        <div class="prompt">
-          <PromptHead path="~/writing" />
-          <div class="prompt-cmd">
-            <span class="cmd">ls</span> <span class="flag">-lht</span>{' '}
-            <span class="arg">posts/</span>
-          </div>
-        </div>
-
-        <div class="ls" role="list">
-          <div class="ls-head" aria-hidden="true">
-            <div class="date">date</div>
-            <div>title</div>
-            <div class="size">read</div>
-            <div class="perms">perms</div>
-          </div>
-          {allPosts.map((post) => (
-            <a
-              class={`ls-row${post.data.draft ? ' draft' : ''}`}
-              href={`/posts/${post.id}/`}
-              role="listitem"
-            >
-              <div class="date">{formatDate(post.data.date)}</div>
-              <div class="file">
-                <span class="title">{post.id}.mdx</span>
-                {(post.data.description || post.data.title) && (
-                  <span class="dek">{post.data.description || post.data.title}</span>
-                )}
-              </div>
-              <div class="size">{post.data.readMinutes}m</div>
-              <div class="perms">-rw-r--r--</div>
-            </a>
-          ))}
-          {allPosts.some((p) => p.data.draft) && (
-            <div class="ls-legend">
-              <span class="star">*</span> unpublished draft
-            </div>
-          )}
-        </div>
-      </section>
+      <ul class="list">
+        {allPosts.map((post) => (
+          <li>
+            <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+            <span class="list-meta">
+              {post.data.draft && <span class="draft-label">draft</span>}
+              {formatDate(post.data.date)}
+            </span>
+          </li>
+        ))}
+      </ul>
     )
   }
 
-  {/* Projects — git log --oneline --graph */}
-  <section class="section">
-    <div class="prompt">
-      <PromptHead path="~/projects" />
-      <div class="prompt-cmd">
-        <span class="cmd">git log</span>
-        <span class="flag">--oneline</span>
-        <span class="flag">--graph</span>
-      </div>
-    </div>
+  <ul class="list">
+    {
+      projects.map((p) => (
+        <li>
+          <a href={`/projects/${p.slug}/`}>{p.name}</a>
+          <span class="list-meta">{p.tagline}</span>
+        </li>
+      ))
+    }
+  </ul>
 
-    <div class="gitlog">
-      {
-        projects.map((p) => (
-          <div class="git-entry">
-            <div class="git-graph">
-              <div class="node" />
-              <div class="line" />
-            </div>
-            <div>
-              <div class="git-meta">
-                <span class="hash">{p.hash}</span>
-                <span>{p.ref}</span>
-                <span class="tag">{p.tag}</span>
-              </div>
-              <div class="git-msg">
-                <a href={p.href}>{p.name}</a> — {p.tagline}
-              </div>
-              <div class="git-body">{p.description}</div>
-              <div class="git-stack">
-                <span class="plus">+</span> {p.stack}
-              </div>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  {/* Links — cat elsewhere.yml */}
-  <section class="section">
-    <div class="prompt">
-      <PromptHead />
-      <div class="prompt-cmd">
-        <span class="cmd">cat</span>
-        <span class="arg">elsewhere.yml</span>
-      </div>
-    </div>
-
-    <div class="kvlist">
-      <div class="kv-row">
-        <div>
-          <span class="k">github</span><span class="colon">: </span><span class="v"
-            ><a href="https://github.com/richardzimring">github.com/richardzimring</a></span
-          >
-        </div>
-        <div class="hint">↗ open</div>
-      </div>
-      <div class="kv-row">
-        <div>
-          <span class="k">linkedin</span><span class="colon">: </span><span class="v"
-            ><a href="https://linkedin.com/in/richardzimring">linkedin.com/in/richardzimring</a
-            ></span
-          >
-        </div>
-        <div class="hint">↗ open</div>
-      </div>
-      <div class="kv-row">
-        <div>
-          <span class="k">resume</span><span class="colon">: </span><span class="v"
-            ><a href="/resume/">richardzimring.com/resume</a></span
-          >
-        </div>
-        <div class="hint">→ local</div>
-      </div>
-    </div>
-  </section>
-
-  <QuoteOfTheDay />
-
-  <Terminal />
+  <p class="footer-links">
+    <a href="/resume/">Resume</a>
+    <a href="https://github.com/richardzimring">GitHub</a>
+    <a href="https://linkedin.com/in/richardzimring">LinkedIn</a>
+  </p>
 </BaseLayout>

@@ -1,10 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PromptHead from '../components/PromptHead.astro';
-import Terminal from '../components/Terminal.astro';
 import { library, kindOrder, kindLabel, type LibraryItemKind } from '../data/library';
 
-// Group items by kind, preserving declaration order within each kind.
 const grouped = kindOrder
   .map((kind) => ({
     kind,
@@ -14,41 +11,22 @@ const grouped = kindOrder
 ---
 
 <BaseLayout
-  title="Richard Zimring — Library"
+  title="Library · Richard Zimring"
   description="Books, films, essays, and other recommendations."
-  active="library"
-  file="library.bib"
-  path="/library/"
 >
-  <div class="prompt">
-    <PromptHead path="~/library" />
-    <div class="prompt-cmd">
-      <span class="cmd">cat</span>
-      <span class="arg">library.bib</span>
-    </div>
-  </div>
+  <h1 class="page-title">Library</h1>
 
-  <div class="bib">
-    {
-      grouped.map((g) => (
-        <section class="bib-group" id={kindLabel[g.kind as LibraryItemKind]}>
-          <h2 class="bib-heading">{kindLabel[g.kind as LibraryItemKind]}</h2>
-          {g.items.map((item) => (
-            <a class="bib-row" href={item.href}>
-              <span class="bib-title-block">
-                <span class="bib-title">{item.title}</span>
-                <span class="bib-leader" aria-hidden="true" />
-                {item.by && <span class="bib-by">{item.by}</span>}
-              </span>
-              <span class="bib-open" aria-hidden="true">
-                ↗
-              </span>
-            </a>
-          ))}
-        </section>
-      ))
-    }
-  </div>
-
-  <Terminal path="~/library" />
+  {
+    grouped.map((g) => (
+      <section class="lib-group" id={kindLabel[g.kind as LibraryItemKind]}>
+        <h2>{kindLabel[g.kind as LibraryItemKind]}</h2>
+        {g.items.map((item) => (
+          <a class="lib-row" href={item.href}>
+            <span class="lib-title">{item.title}</span>
+            {item.by && <span class="lib-by">{item.by}</span>}
+          </a>
+        ))}
+      </section>
+    ))
+  }
 </BaseLayout>

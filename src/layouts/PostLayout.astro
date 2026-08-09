@@ -1,9 +1,6 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Statusbar from '../components/Statusbar.astro';
+import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
-import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -13,9 +10,10 @@ interface Props {
   headings: { depth: number; slug: string; text: string }[];
   draft?: boolean;
   slug?: string;
+  readMinutes: number;
 }
 
-const { title, description, date, ogImage, headings, draft, slug } = Astro.props;
+const { title, description, date, ogImage, headings, draft, readMinutes } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   timeZone: 'UTC',
@@ -24,49 +22,30 @@ const formattedDate = date.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 const iso = date.toISOString().slice(0, 10);
-const fileName = slug ? `${slug}.mdx` : 'post.mdx';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={title} description={description ?? 'Richard Zimring'} ogImage={ogImage} />
-  </head>
-  <body>
-    <div class="window">
-      <Header path={`/writing/${fileName}`} active="writing" />
-      <main class="pane">
-        <TableOfContents headings={headings} />
-        <article class="prose">
-          <div class="post-kicker">
-            <span class="user">$</span>
-            <span class="cmd">cat</span>
-            <span class="arg">{fileName}</span>
-          </div>
-          {draft && <div class="draft-banner">Draft — not published</div>}
-          <h1 class="post-title">{title}</h1>
-          {description && <p class="post-description">{description}</p>}
-          <p class="post-meta">
-            <time datetime={iso}>{formattedDate}</time>
-          </p>
-          <slot />
-        </article>
-      </main>
-      <Statusbar file={fileName} />
+<BaseLayout title={title} description={description ?? 'Richard Zimring'} ogImage={ogImage} prose>
+  <TableOfContents headings={headings} />
+  <article class="essay">
+    {description && <p class="essay-eyebrow">{description}</p>}
+    <h1 class="entry-title">{title}</h1>
+    <p class="entry-meta">
+      {
+        draft && (
+          <>
+            <span class="draft-label">draft</span>
+            <span class="entry-meta-sep" aria-hidden="true">
+              ·
+            </span>
+          </>
+        )
+      }
+      <time datetime={iso}>{formattedDate}</time>
+      <span class="entry-meta-sep" aria-hidden="true">·</span>
+      <span>{readMinutes} min</span>
+    </p>
+    <div class="essay-body prose">
+      <slot />
     </div>
-    <script>
-      document.querySelectorAll('a[href]').forEach((a) => {
-        const href = (a as HTMLAnchorElement).href;
-        try {
-          const url = new URL(href, window.location.href);
-          if (url.origin !== window.location.origin) {
-            a.setAttribute('target', '_blank');
-            a.setAttribute('rel', 'noopener noreferrer');
-          }
-        } catch {
-          // malformed href — leave as-is
-        }
-      });
-    </script>
-  </body>
-</html>
+  </article>
+</BaseLayout>

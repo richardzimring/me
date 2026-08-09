@@ -25,6 +25,7 @@ const { Content, headings } = await render(post);
   headings={headings}
   draft={post.data.draft}
   slug={post.id}
+  readMinutes={post.data.readMinutes}
 >
   <Content />
 </PostLayout>

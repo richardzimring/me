@@ -1,5 +1,5 @@
 ---
-// Compact terminal-styled toggle — shown in the titlebar.
+// Quiet theme toggle — sits in the site bar.
 ---
 
 <button class="theme-toggle" aria-label="Toggle dark/light mode" type="button">
@@ -38,7 +38,7 @@
 </button>
 
 <script is:inline>
-  document.querySelector('.theme-toggle').addEventListener('click', function () {
+  document.querySelector('.theme-toggle')?.addEventListener('click', function () {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
