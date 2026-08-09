@@ -2,53 +2,42 @@ import satori from 'satori';
 import sharp from 'sharp';
 import { loadOgFonts } from './og-fonts';
 
-const BG = '#0c0e12';
-const BG_2 = '#14171d';
-const TEXT = '#d6dde5';
-const MUTED = '#6a7381';
-const RULE = '#232832';
-const AMBER = '#f2b957';
-const TL_RED = '#d05650';
-const TL_YEL = '#d9a545';
-const TL_GRN = '#5cb070';
-
-const MONO = 'JetBrains Mono';
 const SERIF = 'Newsreader';
 
+const themes = {
+  light: {
+    bg: '#ffffff',
+    text: '#1a1a1a',
+    muted: '#5c5c5c',
+  },
+  dark: {
+    bg: '#111111',
+    text: '#ececec',
+    muted: '#9a9a9a',
+  },
+} as const;
+
+export type OgTheme = keyof typeof themes;
+
 export interface OgSpec {
-  path: string; // e.g. "~/writing/foo.mdx"
-  kickerCmd: string; // e.g. "cat"
-  kickerArg: string; // e.g. "foo.mdx"
   title: string;
   description?: string;
-  file: string; // statusbar filename
+  /** Italic serif eyebrow, e.g. "Resume" / "Writing" */
+  label?: string;
+  theme?: OgTheme;
 }
 
-function dot(color: string) {
-  return {
-    type: 'div',
-    props: {
-      style: {
-        width: 14,
-        height: 14,
-        borderRadius: 7,
-        background: color,
-        marginRight: 8,
-      },
-    },
-  };
-}
-
-function span(children: string, style: Record<string, unknown>) {
-  return {
-    type: 'div',
-    props: { style: { display: 'flex', ...style }, children },
-  };
+function truncate(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1).replace(/\s+\S*$/, '');
+  return `${cut}…`;
 }
 
 export async function renderOgPng(spec: OgSpec): Promise<Uint8Array<ArrayBuffer>> {
   const fonts = await loadOgFonts();
-  const titleSize = spec.title.length > 48 ? 52 : spec.title.length > 28 ? 64 : 76;
+  const colors = themes[spec.theme ?? 'light'];
+  const titleSize = spec.title.length > 48 ? 48 : spec.title.length > 28 ? 56 : 64;
+  const description = spec.description ? truncate(spec.description, 140) : undefined;
 
   const markup = {
     type: 'div',
@@ -56,169 +45,73 @@ export async function renderOgPng(spec: OgSpec): Promise<Uint8Array<ArrayBuffer>
       style: {
         width: '100%',
         height: '100%',
-        background: BG,
+        background: colors.bg,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
-        fontFamily: MONO,
-        padding: 48,
+        fontFamily: SERIF,
+        padding: '64px 72px',
       },
       children: [
         {
           type: 'div',
           props: {
             style: {
-              width: 1104,
-              height: 534,
-              background: BG,
-              border: `1px solid ${RULE}`,
-              borderRadius: 12,
               display: 'flex',
               flexDirection: 'column',
-              overflow: 'hidden',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+              maxWidth: 960,
             },
             children: [
-              // Titlebar
+              spec.label
+                ? {
+                    type: 'div',
+                    props: {
+                      style: {
+                        fontFamily: SERIF,
+                        fontStyle: 'italic',
+                        fontWeight: 500,
+                        fontSize: 26,
+                        color: colors.muted,
+                        marginBottom: 16,
+                        display: 'flex',
+                      },
+                      children: spec.label,
+                    },
+                  }
+                : null,
               {
                 type: 'div',
                 props: {
                   style: {
-                    height: 44,
-                    background: BG_2,
-                    borderBottom: `1px solid ${RULE}`,
+                    fontFamily: SERIF,
+                    fontWeight: 500,
+                    fontSize: titleSize,
+                    lineHeight: 1.15,
+                    color: colors.text,
+                    letterSpacing: '-0.02em',
+                    marginBottom: description ? 20 : 0,
                     display: 'flex',
-                    alignItems: 'center',
-                    paddingLeft: 20,
-                    paddingRight: 20,
                   },
-                  children: [
-                    {
-                      type: 'div',
-                      props: {
-                        style: { display: 'flex', alignItems: 'center' },
-                        children: [dot(TL_RED), dot(TL_YEL), dot(TL_GRN)],
-                      },
-                    },
-                    {
-                      type: 'div',
-                      props: {
-                        style: {
-                          flex: 1,
-                          display: 'flex',
-                          justifyContent: 'center',
-                          fontSize: 15,
-                        },
-                        children: [
-                          span(spec.path, { color: AMBER }),
-                          span('\u00a0·\u00a0richardzimring.com', { color: MUTED }),
-                        ],
-                      },
-                    },
-                    { type: 'div', props: { style: { width: 60 } } },
-                  ],
+                  children: spec.title,
                 },
               },
-              // Pane
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    flex: 1,
-                    padding: '60px 64px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  },
-                  children: [
-                    {
-                      type: 'div',
-                      props: {
-                        style: {
-                          display: 'flex',
-                          fontSize: 24,
-                          marginBottom: 40,
-                        },
-                        children: [
-                          span('$\u00a0', { color: MUTED }),
-                          span(`${spec.kickerCmd}\u00a0`, { color: AMBER, fontWeight: 700 }),
-                          span(spec.kickerArg, { color: TEXT }),
-                        ],
+              description
+                ? {
+                    type: 'div',
+                    props: {
+                      style: {
+                        fontFamily: SERIF,
+                        fontWeight: 500,
+                        fontSize: 28,
+                        lineHeight: 1.35,
+                        color: colors.muted,
+                        display: 'flex',
                       },
+                      children: description,
                     },
-                    {
-                      type: 'div',
-                      props: {
-                        style: {
-                          fontFamily: SERIF,
-                          fontWeight: 600,
-                          fontSize: titleSize,
-                          lineHeight: 1.12,
-                          color: TEXT,
-                          letterSpacing: '-0.015em',
-                          marginBottom: spec.description ? 28 : 0,
-                          display: 'flex',
-                        },
-                        children: spec.title,
-                      },
-                    },
-                    spec.description
-                      ? {
-                          type: 'div',
-                          props: {
-                            style: {
-                              fontFamily: SERIF,
-                              fontWeight: 600,
-                              fontSize: 28,
-                              lineHeight: 1.38,
-                              color: MUTED,
-                              display: 'flex',
-                            },
-                            children: spec.description,
-                          },
-                        }
-                      : null,
-                  ].filter(Boolean),
-                },
-              },
-              // Statusbar
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    height: 40,
-                    background: BG_2,
-                    borderTop: `1px solid ${RULE}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    paddingLeft: 20,
-                    paddingRight: 20,
-                    fontSize: 13,
-                  },
-                  children: [
-                    {
-                      type: 'div',
-                      props: {
-                        style: {
-                          background: AMBER,
-                          color: BG,
-                          fontWeight: 700,
-                          padding: '3px 10px',
-                          borderRadius: 3,
-                          marginRight: 14,
-                          fontSize: 12,
-                          letterSpacing: '0.06em',
-                          display: 'flex',
-                        },
-                        children: 'READ-ONLY',
-                      },
-                    },
-                    span(`⎇ main · ${spec.file} · utf-8`, { color: MUTED }),
-                    { type: 'div', props: { style: { flex: 1 } } },
-                    span('Minneapolis · MSP', { color: MUTED }),
-                  ],
-                },
-              },
-            ],
+                  }
+                : null,
+            ].filter(Boolean),
           },
         },
       ],
