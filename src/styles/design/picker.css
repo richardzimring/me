@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background: #111110;
+  color: #e6e4dc;
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+}
+
+.picker {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 5rem;
+}
+
+.picker-header h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.picker-header p {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: #9a978c;
+  margin-bottom: 2.75rem;
+}
+
+.picker-group {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a7a76;
+  margin: 2.5rem 0 0.5rem;
+}
+
+.picker-group:first-of-type {
+  margin-top: 0;
+}
+
+.picker-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.picker-list li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.picker-list a {
+  display: block;
+  padding: 1.35rem 0;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.picker-list a:hover {
+  opacity: 0.75;
+}
+
+.picker-name {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+
+.picker-dek {
+  display: block;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #8a877c;
+}

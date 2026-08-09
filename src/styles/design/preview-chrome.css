@@ -1,0 +1,84 @@
+/* Shared chrome for design preview routes — stays out of each aesthetic */
+
+.dp-chrome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 1.1rem;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  background: rgba(12, 12, 14, 0.92);
+  color: #c8c8c4;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dp-chrome a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.dp-chrome a:hover {
+  color: #fff;
+}
+
+.dp-chrome-label {
+  color: #7a7a76;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.dp-chrome-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  justify-content: flex-end;
+}
+
+.dp-chrome-nav a[aria-current='page'] {
+  color: #fff;
+  font-weight: 600;
+}
+
+.dp-chrome-sep {
+  color: #4a4a48;
+  user-select: none;
+}
+
+.dp-chrome-live {
+  color: #9a9a94;
+}
+
+body {
+  padding-top: 42px;
+}
+
+@media (max-width: 520px) {
+  .dp-chrome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+  }
+
+  body {
+    padding-top: 64px;
+  }
+}

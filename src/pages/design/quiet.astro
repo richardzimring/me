@@ -1,0 +1,91 @@
+---
+import DesignPreviewLayout from '../../layouts/DesignPreviewLayout.astro';
+import { projects } from '../../data/projects';
+import { quotes } from '../../data/quotes';
+import { getPublishedPosts } from '../../lib/posts';
+import '../../styles/design/quiet.css';
+
+const allPosts = await getPublishedPosts();
+const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+const quote = quotes[dayIndex % quotes.length];
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<DesignPreviewLayout
+  title="Quiet Editorial · Design preview"
+  description="Quiet Editorial home page preview"
+  direction="quiet"
+>
+  <main class="q">
+    <header class="q-intro">
+      <p class="q-eyebrow">Richard Zimring</p>
+      <h1>Senior software engineer</h1>
+      <div class="q-bio">
+        <p>
+          Building <a href="https://maven.sportradar.com">Maven</a> at <a
+            href="https://sportradar.com">Sportradar</a
+          > · an AI platform for sports research used on-air during the 2025 World Series and 2026 Super
+          Bowl.
+        </p>
+        <p>
+          Previously: crypto research at <a href="https://kellogg.northwestern.edu">Kellogg</a>, CS
+          at Northwestern.
+        </p>
+      </div>
+    </header>
+
+    {
+      allPosts.length > 0 && (
+        <section class="q-section">
+          <h2>Writing</h2>
+          <ul class="q-posts">
+            {allPosts.map((post) => (
+              <li>
+                <a href={`/posts/${post.id}/`}>
+                  <span class="q-post-title">{post.data.title}</span>
+                  <span class="q-post-meta">
+                    {formatDate(post.data.date)}
+                    {post.data.readMinutes ? ` · ${post.data.readMinutes} min` : ''}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="q-section">
+      <h2>Projects</h2>
+      <ul class="q-projects">
+        {
+          projects.map((p) => (
+            <li>
+              <a href={`/projects/${p.slug}/`}>
+                <span class="q-project-name">{p.name}</span>
+                <span class="q-project-dek">{p.tagline}</span>
+              </a>
+              <p>{p.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="q-section">
+      <h2>Elsewhere</h2>
+      <ul class="q-links">
+        <li><a href="https://github.com/richardzimring">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/richardzimring">LinkedIn</a></li>
+        <li><a href="/resume/">Resume</a></li>
+      </ul>
+    </section>
+
+    <blockquote class="q-quote">
+      <p>{quote.text}</p>
+      <cite>— {quote.author}</cite>
+    </blockquote>
+  </main>
+</DesignPreviewLayout>

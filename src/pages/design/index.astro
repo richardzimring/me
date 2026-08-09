@@ -1,0 +1,28 @@
+---
+import DesignPreviewLayout from '../../layouts/DesignPreviewLayout.astro';
+import '../../styles/design/picker.css';
+---
+
+<DesignPreviewLayout title="Design previews · Richard Zimring" direction={null}>
+  <main class="picker">
+    <header class="picker-header">
+      <h1>Design previews</h1>
+      <p>The live site uses Bare. Quiet and Margin stay here as alternate explorations.</p>
+    </header>
+
+    <ul class="picker-list">
+      <li>
+        <a href="/design/quiet/">
+          <span class="picker-name">Quiet Editorial</span>
+          <span class="picker-dek">Centered serif letterhead. Section labels, soft hierarchy.</span>
+        </a>
+      </li>
+      <li>
+        <a href="/design/margin/">
+          <span class="picker-name">Margin</span>
+          <span class="picker-dek">Book gutter labels. Lists only · no project blurbs.</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+</DesignPreviewLayout>

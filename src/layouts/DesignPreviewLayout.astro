@@ -1,0 +1,64 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import '../styles/design/preview-chrome.css';
+
+type Direction = 'quiet' | 'margin' | null;
+
+interface Props {
+  title: string;
+  description?: string;
+  direction: Direction;
+}
+
+const { title, description = 'Design preview · home page only', direction } = Astro.props;
+
+const directions = [
+  { id: 'quiet' as const, label: 'Quiet', href: '/design/quiet/' },
+  { id: 'margin' as const, label: 'Margin', href: '/design/margin/' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <div class="dp-chrome" role="navigation" aria-label="Design previews">
+      <a class="dp-chrome-label" href="/design/">Design previews</a>
+      <div class="dp-chrome-nav">
+        {
+          directions.map((d, i) => (
+            <Fragment>
+              {i > 0 && (
+                <span class="dp-chrome-sep" aria-hidden="true">
+                  ·
+                </span>
+              )}
+              <a href={d.href} aria-current={direction === d.id ? 'page' : undefined}>
+                {d.label}
+              </a>
+            </Fragment>
+          ))
+        }
+        <span class="dp-chrome-sep" aria-hidden="true">·</span>
+        <a class="dp-chrome-live" href="/">← Live site</a>
+      </div>
+    </div>
+    <slot />
+    <script>
+      document.querySelectorAll('a[href]').forEach((a) => {
+        const href = (a as HTMLAnchorElement).href;
+        try {
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+          }
+        } catch {
+          // malformed href · leave as-is
+        }
+      });
+    </script>
+  </body>
+</html>

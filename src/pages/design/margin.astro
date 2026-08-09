@@ -1,0 +1,75 @@
+---
+import DesignPreviewLayout from '../../layouts/DesignPreviewLayout.astro';
+import { projects } from '../../data/projects';
+import { getPublishedPosts } from '../../lib/posts';
+import '../../styles/design/margin.css';
+
+const allPosts = await getPublishedPosts();
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<DesignPreviewLayout
+  title="Margin · Design preview"
+  description="Margin home page preview · Quiet family"
+  direction="margin"
+>
+  <main class="m">
+    <header class="m-intro">
+      <h1>Richard Zimring</h1>
+      <p class="m-role">Senior software engineer</p>
+      <div class="m-bio">
+        <p>
+          Building <a href="https://maven.sportradar.com">Maven</a> at <a
+            href="https://sportradar.com">Sportradar</a
+          > · an AI platform for sports research used on-air during the 2025 World Series and 2026 Super
+          Bowl.
+        </p>
+        <p>
+          Previously: crypto research at <a href="https://kellogg.northwestern.edu">Kellogg</a>, CS
+          at Northwestern.
+        </p>
+      </div>
+    </header>
+
+    {
+      allPosts.length > 0 && (
+        <section class="m-row">
+          <h2>Writing</h2>
+          <ul class="m-list">
+            {allPosts.map((post) => (
+              <li>
+                <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+                <span class="m-meta">{formatDate(post.data.date)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="m-row">
+      <h2>Projects</h2>
+      <ul class="m-list">
+        {
+          projects.map((p) => (
+            <li>
+              <a href={`/projects/${p.slug}/`}>{p.name}</a>
+              <span class="m-meta">{p.tagline}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="m-row">
+      <h2>Links</h2>
+      <ul class="m-list m-links">
+        <li><a href="https://github.com/richardzimring">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/richardzimring">LinkedIn</a></li>
+        <li><a href="/resume/">Resume</a></li>
+      </ul>
+    </section>
+  </main>
+</DesignPreviewLayout>
