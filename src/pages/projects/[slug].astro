@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectVideo from '../../components/ProjectVideo.astro';
+import { projects, getProject } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+  }));
+}
+
+const project = getProject(Astro.params.slug!);
+if (!project) {
+  return Astro.redirect('/projects/');
+}
+---
+
+<BaseLayout title={`${project.name} · Richard Zimring`} description={project.description} prose>
+  <article class="project">
+    <p class="project-eyebrow">{project.tagline}</p>
+    <h1 class="entry-title">{project.name}</h1>
+    <p class="entry-meta">
+      <span>{project.tag}</span>
+      {
+        project.href && (
+          <>
+            <span class="entry-meta-sep" aria-hidden="true">
+              ·
+            </span>
+            <a href={project.href}>{project.linkLabel ?? 'View'}</a>
+          </>
+        )
+      }
+    </p>
+
+    {
+      project.video && (
+        <ProjectVideo
+          src={project.video}
+          poster={project.poster}
+          title={project.name}
+          fit={project.videoFit}
+        />
+      )
+    }
+
+    <div class="project-body">
+      {project.body.map((paragraph) => <p set:html={paragraph} />)}
+    </div>
+
+    <p class="project-stack">{project.stack}</p>
+  </article>
+</BaseLayout>

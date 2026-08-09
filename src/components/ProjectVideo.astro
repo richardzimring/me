@@ -1,0 +1,25 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  title: string;
+  /** Portrait sources sit in the shared 16:10 slot and fill height (contain). */
+  fit?: 'cover' | 'contain';
+}
+
+const { src, poster, title, fit = 'cover' } = Astro.props;
+---
+
+<div class:list={['project-video', fit === 'contain' && 'project-video--contain']}>
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster={poster}
+    aria-label={`${title} preview`}
+  >
+    <source src={src} type="video/mp4" />
+  </video>
+</div>

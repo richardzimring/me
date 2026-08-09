@@ -1,54 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PromptHead from '../../components/PromptHead.astro';
-import Terminal from '../../components/Terminal.astro';
 import { projects } from '../../data/projects';
 ---
 
-<BaseLayout
-  title="Richard Zimring"
-  description="Projects"
-  active="projects"
-  file="projects/index.html"
-  path="/projects/"
-  ogImage="/og/projects.png"
->
-  <div class="prompt">
-    <PromptHead path="~/projects" />
-    <div class="prompt-cmd">
-      <span class="cmd">git log</span>
-      <span class="flag">--oneline</span>
-      <span class="flag">--graph</span>
-    </div>
-  </div>
+<BaseLayout title="Projects · Richard Zimring" description="Projects" ogImage="/og/projects.png">
+  <h1 class="page-title">Projects</h1>
 
-  <div class="gitlog">
+  <ul class="list">
     {
       projects.map((p) => (
-        <div class="git-entry">
-          <div class="git-graph">
-            <div class="node" />
-            <div class="line" />
-          </div>
-          <div>
-            <div class="git-meta">
-              <span class="hash">{p.hash}</span>
-              <span>{p.ref}</span>
-              <span class="tag">{p.tag}</span>
-              <span>{p.date}</span>
-            </div>
-            <div class="git-msg">
-              <a href={p.href}>{p.name}</a> — {p.tagline}
-            </div>
-            <div class="git-body">{p.description}</div>
-            <div class="git-stack">
-              <span class="plus">+</span> {p.stack}
-            </div>
-          </div>
-        </div>
+        <li>
+          <a href={`/projects/${p.slug}/`}>{p.name}</a>
+          <span class="list-meta">{p.tagline}</span>
+        </li>
       ))
     }
-  </div>
-
-  <Terminal path="~/projects" />
+  </ul>
 </BaseLayout>
