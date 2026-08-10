@@ -40,23 +40,23 @@ The resume lives at `src/pages/resume.mdx`. Edit it directly — the layout hand
 
 Projects are defined in `src/data/projects.ts`. Each entry gets a page at `/projects/{slug}/`.
 
-| Field         | Description                                |
-| ------------- | ------------------------------------------ |
-| `slug`        | URL path segment                           |
-| `name`        | Display name                               |
-| `tagline`     | Short label on home / projects index       |
-| `description` | One-line summary (OG / meta)               |
-| `body`        | Paragraphs for the project page            |
-| `href`        | External link (App Store, live site, etc.) |
-| `linkLabel`   | Label for that link (default: View)        |
-| `stack`       | Tech stack line                            |
-| `tag`         | Status chip text (e.g. `ios · live`)       |
-| `video`       | Optional path to mp4 under `public/`       |
-| `poster`      | Optional poster image under `public/`      |
-| `videoFit`    | `cover` (default) or `contain` (phone)     |
-| `icon`        | Optional app icon on the project page      |
+| Field         | Description                                                       |
+| ------------- | ----------------------------------------------------------------- |
+| `slug`        | URL path segment                                                  |
+| `name`        | Display name                                                      |
+| `tagline`     | Short label on home / projects index                              |
+| `description` | One-line summary (OG / meta)                                      |
+| `body`        | Paragraphs for the project page                                   |
+| `href`        | External link (App Store, live site, etc.)                        |
+| `linkLabel`   | Label for that link (default: View)                               |
+| `stack`       | Tech stack line                                                   |
+| `tag`         | Platform label (e.g. `ios`, `web`)                                |
+| `video`       | Optional path to mp4 under `public/`                              |
+| `poster`      | Optional poster image under `public/`                             |
+| `videoFit`    | `cover` (default), `contain` (gutters), or `device` (Apple bezel) |
+| `icon`        | Optional app icon on the project page                             |
 
-Preview videos: drop muted-loop-friendly mp4s in `public/videos/projects/{slug}.mp4` and optional posters in `public/images/projects/{slug}-poster.jpg`. Pages autoplay muted, looping, inline. Use `videoFit: 'contain'` for portrait iOS recordings so they fill the shared 16:10 slot vertically and letterbox on the sides.
+Preview videos: see **AGENTS.md → Project preview videos** for capture + ffmpeg encode. Drop mp4s in `public/videos/projects/{slug}.mp4` and posters in `public/images/projects/{slug}-poster.jpg`. Shared web frame is `1512 / 948`. Pages autoplay muted, looping, inline; click expands lightbox. Use `videoFit: 'device'` for Gather (official iPhone 17 Black bezel) or `contain` for portrait-in-landscape gutters.
 
 ## OG Preview Images
 

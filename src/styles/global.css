@@ -411,22 +411,36 @@ a:hover {
    Project detail
    ============================================================== */
 
-.project-eyebrow {
+.project .entry-title {
+  margin-bottom: var(--space-1);
+}
+
+.project-dek {
+  font-family: var(--font-serif);
   font-style: italic;
   font-size: var(--text-ui);
+  line-height: var(--leading-snug);
   color: var(--muted);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.project .entry-meta {
+  margin-bottom: var(--space-6);
 }
 
 .project-video {
+  position: relative;
   margin: 0 0 var(--space-6);
   background: var(--media-bg);
-  aspect-ratio: 16 / 10;
+  /* Matches encoded project previews (14" capture, top hairline cropped) */
+  aspect-ratio: 1512 / 948;
   overflow: hidden;
 }
 
 .project-video video,
-.project-video img {
+.project-video img:not(.project-video-device-bezel),
+.project-video-lightbox-frame video,
+.project-video-device-screen video {
   display: block;
   width: 100%;
   height: 100%;
@@ -434,8 +448,123 @@ a:hover {
 }
 
 .project-video--contain video,
-.project-video--contain img {
+.project-video--contain img:not(.project-video-device-bezel) {
   object-fit: contain;
+}
+
+/* iOS — official Apple Design Resources bezel (iPhone 17 Black) */
+.project-video--device {
+  background: transparent;
+  aspect-ratio: auto;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+}
+
+.project-video-device,
+.project-video-lightbox-device {
+  position: relative;
+  width: min(100%, 280px);
+  aspect-ratio: 1350 / 2760;
+  overflow: hidden;
+  border-radius: 15.5% / 7.6%;
+}
+
+.project-video-device-screen {
+  position: absolute;
+  left: 5.333%;
+  top: 2.5%;
+  right: 5.333%;
+  bottom: 2.5%;
+  overflow: hidden;
+  border-radius: 15.5% / 7.15%;
+  background: #000;
+}
+
+.project-video-device-bezel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.project-video--device .project-video-open {
+  z-index: 2;
+}
+
+.project-video-open {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.project-video-lightbox {
+  border: none;
+  padding: 0;
+  margin: auto; /* reset zeroes UA dialog centering */
+  background: transparent;
+  max-width: min(96vw, 1120px);
+  width: 100%;
+  overflow: hidden;
+}
+
+.project-video-lightbox::backdrop {
+  background: color-mix(in srgb, #000 45%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.project-video-lightbox-frame {
+  width: min(100%, calc(90vh * 1512 / 948));
+  margin-inline: auto;
+  background: var(--media-bg);
+  aspect-ratio: 1512 / 948;
+  overflow: hidden;
+  cursor: zoom-out;
+}
+
+.project-video-lightbox-device {
+  width: min(72vw, calc(90vh * 1350 / 2760), 360px);
+  margin-inline: auto;
+  cursor: zoom-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-video-lightbox[open] {
+    animation: project-video-in 0.22s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .project-video-lightbox[open]::backdrop {
+    animation: project-video-backdrop-in 0.22s cubic-bezier(0.2, 0, 0, 1);
+  }
+}
+
+@keyframes project-video-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes project-video-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .project-body {

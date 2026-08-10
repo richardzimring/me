@@ -3,23 +3,167 @@ interface Props {
   src: string;
   poster?: string;
   title: string;
-  /** Portrait sources sit in the shared 16:10 slot and fill height (contain). */
-  fit?: 'cover' | 'contain';
+  /**
+   * cover — landscape web demos (default)
+   * contain — portrait in landscape slot with gutters
+   * device — portrait in official Apple bezel
+   */
+  fit?: 'cover' | 'contain' | 'device';
 }
 
 const { src, poster, title, fit = 'cover' } = Astro.props;
+const label = `${title} preview`;
+const isDevice = fit === 'device';
+const bezelSrc = '/images/devices/iphone-17-black.png';
 ---
 
-<div class:list={['project-video', fit === 'contain' && 'project-video--contain']}>
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    poster={poster}
-    aria-label={`${title} preview`}
-  >
-    <source src={src} type="video/mp4" />
-  </video>
-</div>
+{
+  isDevice ? (
+    <div class="project-video project-video--device" data-project-video>
+      <div class="project-video-device">
+        <div class="project-video-device-screen">
+          <video
+            class="project-video-inline"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster={poster}
+            aria-label={label}
+          >
+            <source src={src} type="video/mp4" />
+          </video>
+        </div>
+        <img
+          class="project-video-device-bezel"
+          src={bezelSrc}
+          alt=""
+          width="900"
+          height="1840"
+          decoding="async"
+        />
+        <button
+          type="button"
+          class="project-video-open"
+          aria-haspopup="dialog"
+          aria-label={`Expand ${label}`}
+        />
+      </div>
+    </div>
+  ) : (
+    <div
+      class:list={['project-video', fit === 'contain' && 'project-video--contain']}
+      data-project-video
+    >
+      <video
+        class="project-video-inline"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={poster}
+        aria-label={label}
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        class="project-video-open"
+        aria-haspopup="dialog"
+        aria-label={`Expand ${label}`}
+      />
+    </div>
+  )
+}
+
+{
+  isDevice ? (
+    <dialog class="project-video-lightbox" aria-label={label} data-project-video-lightbox>
+      <div class="project-video-lightbox-device">
+        <div class="project-video-device-screen">
+          <video
+            class="project-video-expanded"
+            muted
+            loop
+            playsinline
+            preload="none"
+            poster={poster}
+            aria-label={label}
+          >
+            <source src={src} type="video/mp4" />
+          </video>
+        </div>
+        <img
+          class="project-video-device-bezel"
+          src={bezelSrc}
+          alt=""
+          width="900"
+          height="1840"
+          decoding="async"
+        />
+      </div>
+    </dialog>
+  ) : (
+    <dialog class="project-video-lightbox" aria-label={label} data-project-video-lightbox>
+      <div
+        class:list={['project-video-lightbox-frame', fit === 'contain' && 'project-video--contain']}
+      >
+        <video
+          class="project-video-expanded"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster={poster}
+          aria-label={label}
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      </div>
+    </dialog>
+  )
+}
+
+<script>
+  function initProjectVideos() {
+    document.querySelectorAll<HTMLElement>('[data-project-video]').forEach((root) => {
+      if (root.dataset.bound === 'true') return;
+      root.dataset.bound = 'true';
+
+      const openBtn = root.querySelector<HTMLButtonElement>('.project-video-open');
+      const inline = root.querySelector<HTMLVideoElement>('.project-video-inline');
+      const lightbox = root.nextElementSibling;
+      if (!openBtn || !inline || !(lightbox instanceof HTMLDialogElement)) return;
+      if (!lightbox.matches('[data-project-video-lightbox]')) return;
+
+      const expanded = lightbox.querySelector<HTMLVideoElement>('.project-video-expanded');
+      if (!expanded) return;
+
+      const open = () => {
+        expanded.currentTime = inline.currentTime;
+        lightbox.showModal();
+        void expanded.play().catch(() => {});
+      };
+
+      const close = () => {
+        inline.currentTime = expanded.currentTime;
+        lightbox.close();
+        expanded.pause();
+        void inline.play().catch(() => {});
+      };
+
+      openBtn.addEventListener('click', open);
+      lightbox.addEventListener('click', close);
+
+      lightbox.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        close();
+      });
+    });
+  }
+
+  initProjectVideos();
+  document.addEventListener('astro:page-load', initProjectVideos);
+</script>

@@ -29,6 +29,62 @@ src/
 - **Deployment**: GitHub Pages via GitHub Actions on push to `main`
 - **Domain**: `richardzimring.com` (custom domain via GitHub Pages)
 
+## Project preview videos
+
+Web project demos are fullscreen light-mode recordings from the **14" M1 MacBook Pro**. Do **not** use Chrome device mode or an external monitor (those came out soft / wrong size). Hide Chrome chrome, go fullscreen, zoom 100%.
+
+### Capture
+
+|              | Web (Courtside, Heatstrike)                                         | iOS (Gather)                                                        |
+| ------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Source       | Fullscreen laptop screen recording (`.mov`)                         | Simulator / device, **portrait**                                    |
+| Typical size | `3024 × 1898` (panel is 3024×1964; recordings are slightly shorter) | Phone aspect (e.g. 1206×2622 on 17 Pro)                             |
+| Site fit     | `cover` (default)                                                   | `videoFit: 'device'` — official Apple iPhone 17 Black bezel overlay |
+
+- Record in **light mode**, short muted loops (~15–30s), one product beat.
+- macOS recordings often include a **1px black top row** — always crop it on encode (below).
+
+### Encode (ffmpeg)
+
+Outputs land at:
+
+- `public/videos/projects/{slug}.mp4`
+- `public/images/projects/{slug}-poster.jpg`
+
+Shared CSS frame after encode: **`1512 / 948`** (see `.project-video` in `global.css`).
+
+```bash
+# From a 3024×1898 .mov in ~/Documents (or pass the path)
+SRC="$HOME/Documents/your-recording.mov"
+SLUG=heatstrike   # or courtside, gather, …
+
+ffmpeg -y -i "$SRC" \
+  -an \
+  -vf "crop=iw:ih-2:0:2,scale=1512:-2,fps=30" \
+  -c:v libx264 -pix_fmt yuv420p \
+  -crf 26 -preset medium \
+  -movflags +faststart \
+  "public/videos/projects/${SLUG}.mp4"
+
+ffmpeg -y -i "public/videos/projects/${SLUG}.mp4" \
+  -ss 00:00:01 -frames:v 1 -update 1 \
+  "public/images/projects/${SLUG}-poster.jpg"
+```
+
+| Flag / filter                      | Why                                            |
+| ---------------------------------- | ---------------------------------------------- |
+| `crop=iw:ih-2:0:2`                 | Drop the black top hairline from macOS capture |
+| `scale=1512:-2`                    | Half-res; sharp at ~640px column, small file   |
+| `fps=30`                           | Enough for UI; smaller than 60fps              |
+| `-an`                              | Autoplay is muted                              |
+| `crf 26` + `yuv420p` + `faststart` | Web-friendly H.264                             |
+
+Wire the paths in `src/data/projects.ts` (`video`, `poster`, and `videoFit: 'device'` for Gather). UI: `ProjectVideo.astro` — muted loop autoplay inline; click opens a centered lightbox (blurred dim backdrop; click / Escape to close). Bezel asset: `public/images/devices/iphone-17-black.png` (from Apple Design Resources).
+
+### iOS note
+
+Portrait Gather clips use `videoFit: 'device'`: video sits in the bezel screen hole (`left/right 5.333%`, `top/bottom 2.5%`), Apple PNG overlays on top. Encode Gather to ~1080px wide without forcing the laptop aspect.
+
 ## Linting & Formatting
 
 - **Linter**: ESLint (`eslint.config.js`) — catches TypeScript and Astro issues

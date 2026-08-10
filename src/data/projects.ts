@@ -15,8 +15,8 @@ export interface Project {
   video?: string;
   /** Optional still frame while video loads */
   poster?: string;
-  /** cover (default) or contain — use contain for portrait phone recordings in the 16:10 slot */
-  videoFit?: 'cover' | 'contain';
+  /** cover (default), contain (portrait + gutters), or device (Apple bezel) */
+  videoFit?: 'cover' | 'contain' | 'device';
   /** App icon asset (kept for later; not rendered yet) */
   icon?: string;
 }
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     slug: 'gather',
     name: 'Gather',
     tagline: 'social calendar sync',
-    tag: 'ios · live',
+    tag: 'ios',
     href: 'https://apps.apple.com/us/app/gather-plan-with-friends/id6759443297',
     linkLabel: 'App Store',
     description:
@@ -39,16 +39,16 @@ export const projects: Project[] = [
     stack: 'TypeScript · React Native · Expo · Hono · AWS Lambda · Postgres',
     video: '/videos/projects/gather.mp4',
     poster: '/images/projects/gather-poster.jpg',
-    videoFit: 'contain',
+    videoFit: 'device',
     icon: '/images/projects/gather-icon.png',
   },
   {
     slug: 'courtside',
     name: 'Courtside',
     tagline: 'tennis alerts',
-    tag: 'web · live',
+    tag: 'web',
     href: 'https://courtside.rzimring.com',
-    linkLabel: 'Open app',
+    linkLabel: 'courtside.rzimring.com',
     description: "Pick your players. We'll ping you the second they walk on court.",
     body: [
       "Tennis matches don't have reliable start times. Courtside sends a push when an ATP or WTA player you follow walks on the court.",
@@ -64,14 +64,14 @@ export const projects: Project[] = [
     slug: 'heatstrike',
     name: 'Heatstrike',
     tagline: 'options heatmap',
-    tag: 'web · live',
+    tag: 'web',
     href: 'https://heatstrike.rzimring.com',
-    linkLabel: 'Open app',
+    linkLabel: 'heatstrike.rzimring.com',
     description:
       'Interactive 2D heatmap of option chains — strikes × expirations, colored by volume, OI, spread, or the Greeks.',
     body: [
       "Displays a 2D heatmap of options chain data — strikes on one axis, expirations on the other, colored by a selected metric such as volume, open interest, price, spread, or the Greeks (delta, gamma, …). Select a ticker, choose calls or puts, and click on any of the cells to open the options chain's Nasdaq contract page.",
-      'It supports popular tickers sourced from Reddit activity and a watchlist for favorited tickers. Valid tickers refresh daily from OCC.',
+      'It supports popular tickers sourced from Reddit activity and a watchlist for favorited tickers. Valid tickers refresh daily from <a href="https://www.theocc.com/">OCC</a>.',
       'Built as a React SPA with Vite, visx, AWS Lambda, and DynamoDB.',
     ],
     stack: 'TypeScript · React · Vite · visx · Hono · AWS Lambda · DynamoDB',
