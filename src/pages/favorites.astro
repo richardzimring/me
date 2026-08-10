@@ -10,8 +10,7 @@ const grouped = kindOrder
   }))
   .filter((g) => g.items.length > 0);
 
-const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-const quote = quotes[dayIndex % quotes.length];
+const ROTATE_MS = 30_000;
 ---
 
 <BaseLayout
@@ -34,19 +33,56 @@ const quote = quotes[dayIndex % quotes.length];
     ))
   }
 
-  <blockquote class="favorites-quote">
-    <p id="qotd-text">{quote.text}</p>
-    <cite id="qotd-author">— {quote.author}</cite>
+  <blockquote class="favorites-quote is-pending" data-favorites-quote>
+    <p data-favorites-quote-text></p>
+    <cite data-favorites-quote-author></cite>
   </blockquote>
 </BaseLayout>
 
-<script define:vars={{ quotes }}>
-  const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-  const quote = quotes[dayIndex % quotes.length];
-  const text = document.getElementById('qotd-text');
-  const author = document.getElementById('qotd-author');
-  if (text && author) {
-    text.textContent = quote.text;
-    author.textContent = '— ' + quote.author;
-  }
+<script define:vars={{ quotes, ROTATE_MS }}>
+  const root = document.querySelector('[data-favorites-quote]');
+  const textEl = root?.querySelector('[data-favorites-quote-text]');
+  const authorEl = root?.querySelector('[data-favorites-quote-author]');
+  if (!(root instanceof HTMLElement) || !textEl || !authorEl || quotes.length === 0) return;
+
+  let index = Math.floor(Math.random() * quotes.length);
+  let fading = false;
+
+  const show = (next) => {
+    const quote = quotes[next];
+    textEl.textContent = quote.text;
+    authorEl.textContent = '— ' + quote.author;
+    index = next;
+  };
+
+  show(index);
+  root.classList.remove('is-pending');
+
+  if (quotes.length < 2) return;
+
+  const advance = () => {
+    if (fading) return;
+    fading = true;
+    root.classList.add('is-fading');
+
+    const finish = () => {
+      root.removeEventListener('transitionend', onFadeOut);
+      window.clearTimeout(fallback);
+      show((index + 1) % quotes.length);
+      requestAnimationFrame(() => {
+        root.classList.remove('is-fading');
+        fading = false;
+      });
+    };
+
+    const onFadeOut = (event) => {
+      if (event.target !== root || event.propertyName !== 'opacity') return;
+      finish();
+    };
+
+    root.addEventListener('transitionend', onFadeOut);
+    const fallback = window.setTimeout(finish, 800);
+  };
+
+  window.setInterval(advance, ROTATE_MS);
 </script>

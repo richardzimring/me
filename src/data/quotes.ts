@@ -29,10 +29,6 @@ export const quotes: Quote[] = [
     author: 'Ilya Sutskever',
   },
   {
-    text: 'We’re at this point now where ChatGPT is this kind of idiot savant, and it also doesn’t really understand truth. It’s very different from a person who tries to have a consistent world view.',
-    author: 'Geoffrey Hinton',
-  },
-  {
     text: 'It is wisdom to recognize necessity when all other courses have been weighed, though as folly it may appear to those who cling to false hope.',
     author: 'Gandalf',
   },
