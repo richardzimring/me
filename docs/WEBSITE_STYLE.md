@@ -39,8 +39,8 @@ Use `--space-1` … `--space-9`. Page padding: `--page-pad-top` / `--page-pad-x`
 - List pages: `--max-width` 480px
 - Reading pages (posts, projects, resume): `--max-width-prose` 640px
 - Links: no underline at rest; underline on hover (including prose)
-- Shared patterns: `.page-title`, `.entry-title`, `.entry-dek`, `.entry-meta`, `.list`, `.list-meta`
-- Detail shells: `.project` (eyebrow + video + stack), `.essay` (eyebrow + body), `.resume` (eyebrow + meta links + body)
+- Shared patterns: `.page-title`, `.entry-eyebrow`, `.entry-title`, `.entry-dek`, `.entry-meta`, `.list`, `.list-meta`
+- Detail shells: `.project` / `.essay` / `.resume` (eyebrow → title → [dek] → meta → body)
 
 ## Dark / Light Mode
 

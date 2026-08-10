@@ -27,7 +27,7 @@ const iso = date.toISOString().slice(0, 10);
 <BaseLayout title={title} description={description ?? 'Richard Zimring'} ogImage={ogImage} prose>
   <TableOfContents headings={headings} />
   <article class="essay">
-    {description && <p class="essay-eyebrow">{description}</p>}
+    {description && <p class="entry-eyebrow">{description}</p>}
     <h1 class="entry-title">{title}</h1>
     <p class="entry-meta">
       {

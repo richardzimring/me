@@ -8,7 +8,7 @@ The site uses a **Bare** aesthetic: a narrow centered column, Newsreader for nea
 2. **Two type registers.** Newsreader for reading and lists; system sans only for meta.
 3. **One body color.** Reading copy uses `--text`, never a washed-out secondary gray. Meta stays `--meta`.
 4. **One link behavior.** No underline at rest; underline on hover — including in prose.
-5. **Shared patterns.** List pages use `.page-title` + `.list`. Detail pages use `.entry-title` / `.entry-meta`, with page-specific shells (`.project`, `.essay`, `.resume`).
+5. **Shared patterns.** List pages use `.page-title` + `.list`. Detail pages use `.entry-eyebrow` → `.entry-title` → optional `.entry-dek` → `.entry-meta`, with page-specific shells (`.project`, `.essay`, `.resume`).
 
 ## Type
 
@@ -32,8 +32,8 @@ The site uses a **Bare** aesthetic: a narrow centered column, Newsreader for nea
 - `.site-bar` — name link (subpages) + theme toggle
 - `.page` (480px) / `.page--prose` (640px)
 - `.list` + `.list-meta` — home, writing, projects index, favorites rows
-- `.entry-*` — shared title / dek / meta on detail pages
-- `.project` / `.essay` / `.resume` — page shells (eyebrow → title → meta → body)
+- `.entry-*` — shared eyebrow / title / dek / meta on detail pages
+- `.project` / `.essay` / `.resume` — page shells (eyebrow → title → [dek] → meta → body)
 - `.toc` — fixed left rail on wide screens for posts
 
 ## Theme

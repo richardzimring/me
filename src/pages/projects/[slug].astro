@@ -17,8 +17,8 @@ if (!project) {
 
 <BaseLayout title={`${project.name} · Richard Zimring`} description={project.description} prose>
   <article class="project">
+    <p class="entry-eyebrow">{project.tagline}</p>
     <h1 class="entry-title">{project.name}</h1>
-    <p class="project-dek">{project.tagline}</p>
     <p class="entry-meta">
       <span>{project.tag}</span>
       {

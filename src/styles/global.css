@@ -15,7 +15,7 @@
   --text-body: 1.125rem; /* serif: bio, prose, project copy */
   --text-page: 1.2rem; /* serif: list-page titles (Writing, etc.) */
   --text-display: clamp(1.65rem, 4vw, 2.1rem); /* serif: article / project / resume h1 */
-  --text-section: 1.25rem; /* serif: prose h2, favorites group */
+  --text-section: 1.25rem; /* serif: prose h2 */
 
   --leading-tight: 1.2;
   --leading-snug: 1.45;
@@ -263,6 +263,15 @@ a:hover {
   margin-bottom: var(--space-2);
 }
 
+.entry-eyebrow {
+  font-style: italic;
+  font-size: var(--text-ui);
+  line-height: var(--leading-snug);
+  color: var(--muted);
+  text-wrap: pretty;
+  margin-bottom: var(--space-2);
+}
+
 .entry-dek {
   font-size: var(--text-body);
   line-height: var(--leading-normal);
@@ -372,14 +381,14 @@ a:hover {
 .favorites-quote p {
   margin: 0;
   font-style: italic;
-  font-size: 1.15rem;
-  line-height: 1.55;
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
   color: var(--muted);
 }
 
 .favorites-quote cite {
   display: block;
-  margin-top: 0.85rem;
+  margin-top: var(--space-3);
   font-family: var(--font-sans);
   font-size: var(--text-meta);
   font-style: normal;
@@ -434,19 +443,6 @@ a:hover {
 /* ==============================================================
    Project detail
    ============================================================== */
-
-.project .entry-title {
-  margin-bottom: var(--space-1);
-}
-
-.project-dek {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--text-ui);
-  line-height: var(--leading-snug);
-  color: var(--muted);
-  margin-bottom: var(--space-3);
-}
 
 .project .entry-meta {
   margin-bottom: var(--space-6);
@@ -612,14 +608,6 @@ a:hover {
 /* ==============================================================
    Essay detail
    ============================================================== */
-
-.essay-eyebrow {
-  font-style: italic;
-  font-size: var(--text-ui);
-  color: var(--muted);
-  text-wrap: pretty;
-  margin-bottom: var(--space-2);
-}
 
 .essay .entry-meta {
   margin-bottom: var(--space-6);
@@ -827,17 +815,6 @@ a:hover {
 /* ==============================================================
    Resume
    ============================================================== */
-
-.resume-eyebrow {
-  font-style: italic;
-  font-size: var(--text-ui);
-  color: var(--muted);
-  margin-bottom: var(--space-2);
-}
-
-.resume .entry-dek {
-  margin-bottom: var(--space-2);
-}
 
 .resume .entry-meta {
   margin-bottom: var(--space-7);
