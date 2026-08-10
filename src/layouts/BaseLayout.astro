@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import SiteName from '../components/SiteName.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -28,13 +29,7 @@ const pageClass = ['page', prose && 'page--prose'].filter(Boolean).join(' ');
   </head>
   <body>
     <header class={barClass}>
-      {
-        !home && (
-          <a class="site-name" href="/">
-            Richard Zimring
-          </a>
-        )
-      }
+      {!home && <SiteName />}
       <ThemeToggle />
     </header>
     <main class={pageClass}>

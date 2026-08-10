@@ -144,13 +144,55 @@ a:hover {
   font-family: var(--font-serif);
   font-size: var(--text-ui);
   font-weight: 500;
+  line-height: var(--leading-snug);
   color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.site-name:hover,
+.site-name:focus-visible {
+  color: var(--text);
   text-decoration: none;
 }
 
-.site-name:hover {
-  color: var(--text);
-  text-decoration: none;
+.site-name-mark {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.site-name-rest,
+.site-name-gap {
+  display: grid;
+  grid-template-columns: 1fr;
+  opacity: 1;
+}
+
+.site-name-rest > span,
+.site-name-gap > span {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Collapse to RZ on devices that can hover */
+@media (hover: hover) {
+  .site-name-rest,
+  .site-name-gap {
+    grid-template-columns: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-columns 0.4s cubic-bezier(0.2, 0, 0, 1),
+      opacity 0.28s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .site-name:hover .site-name-rest,
+  .site-name:focus-visible .site-name-rest,
+  .site-name:hover .site-name-gap,
+  .site-name:focus-visible .site-name-gap {
+    grid-template-columns: 1fr;
+    opacity: 1;
+  }
 }
 
 .theme-toggle {
