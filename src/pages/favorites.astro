@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { library, kindOrder, kindLabel, type LibraryItemKind } from '../data/library';
+import { quotes } from '../data/quotes';
+
+const grouped = kindOrder
+  .map((kind) => ({
+    kind,
+    items: library.filter((item) => item.kind === kind),
+  }))
+  .filter((g) => g.items.length > 0);
+
+const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+const quote = quotes[dayIndex % quotes.length];
+---
+
+<BaseLayout
+  title="Favorites · Richard Zimring"
+  description="Quotes, books, films, and other favorites."
+>
+  <h1 class="page-title">Favorites</h1>
+
+  {
+    grouped.map((g) => (
+      <section class="lib-group" id={kindLabel[g.kind as LibraryItemKind]}>
+        <h2>{kindLabel[g.kind as LibraryItemKind]}</h2>
+        {g.items.map((item) => (
+          <a class="lib-row" href={item.href}>
+            <span class="lib-title">{item.title}</span>
+            {item.by && <span class="lib-by">{item.by}</span>}
+          </a>
+        ))}
+      </section>
+    ))
+  }
+
+  <blockquote class="favorites-quote">
+    <p id="qotd-text">{quote.text}</p>
+    <cite id="qotd-author">— {quote.author}</cite>
+  </blockquote>
+</BaseLayout>
+
+<script define:vars={{ quotes }}>
+  const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+  const quote = quotes[dayIndex % quotes.length];
+  const text = document.getElementById('qotd-text');
+  const author = document.getElementById('qotd-author');
+  if (text && author) {
+    text.textContent = quote.text;
+    author.textContent = '— ' + quote.author;
+  }
+</script>

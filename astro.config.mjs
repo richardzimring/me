@@ -14,4 +14,8 @@ export default defineConfig({
     },
   },
   site: 'https://richardzimring.com',
+  redirects: {
+    '/library': '/favorites',
+    '/library/': '/favorites/',
+  },
 });

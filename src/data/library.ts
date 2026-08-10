@@ -8,7 +8,7 @@ export interface LibraryItem {
 }
 
 /**
- * Order in which kinds are rendered on /library/.
+ * Order in which kinds are rendered on /favorites/.
  * Items within each kind preserve their declaration order below.
  */
 export const kindOrder: LibraryItemKind[] = ['video', 'doc', 'essay', 'book', 'movie', 'podcast'];

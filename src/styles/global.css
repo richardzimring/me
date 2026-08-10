@@ -15,7 +15,7 @@
   --text-body: 1.125rem; /* serif: bio, prose, project copy */
   --text-page: 1.2rem; /* serif: list-page titles (Writing, etc.) */
   --text-display: clamp(1.65rem, 4vw, 2.1rem); /* serif: article / project / resume h1 */
-  --text-section: 1.25rem; /* serif: prose h2, library group */
+  --text-section: 1.25rem; /* serif: prose h2, favorites group */
 
   --leading-tight: 1.2;
   --leading-snug: 1.45;
@@ -362,7 +362,31 @@ a:hover {
   color: var(--muted);
 }
 
-/* Library — same list rhythm as home */
+/* Favorites — shelf, then Quiet-style quote sign-off */
+.favorites-quote {
+  margin: var(--space-9) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.favorites-quote p {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.favorites-quote cite {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  font-style: normal;
+  letter-spacing: 0.04em;
+  color: var(--meta);
+}
+
 .lib-group {
   margin-bottom: var(--space-6);
 }
