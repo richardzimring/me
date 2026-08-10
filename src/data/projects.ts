@@ -67,11 +67,10 @@ export const projects: Project[] = [
     tag: 'web',
     href: 'https://heatstrike.rzimring.com',
     linkLabel: 'heatstrike.rzimring.com',
-    description:
-      'Interactive 2D heatmap of option chains — strikes × expirations, colored by volume, OI, spread, or the Greeks.',
+    description: 'Interactive heatmap over live option chains.',
     body: [
-      "Displays a 2D heatmap of options chain data — strikes on one axis, expirations on the other, colored by a selected metric such as volume, open interest, price, spread, or the Greeks (delta, gamma, …). Select a ticker, choose calls or puts, and click on any of the cells to open the options chain's Nasdaq contract page.",
-      'It supports popular tickers sourced from Reddit activity and a watchlist for favorited tickers. Valid tickers refresh daily from <a href="https://www.theocc.com/">OCC</a>.',
+      'Select a ticker and choose calls or puts. Heatstrike lays out strikes against expirations as a heatmap. Change the color or size based on a metric (volume, open interest, spread, price, or the Greeks), then click a cell to open its Nasdaq contract page.',
+      'Search any ticker from the <a href="https://www.theocc.com/">OCC</a>. Supports a watchlist for favorites, and shows popular tickers from <a href="https://yolostocks.live/">Reddit activity</a>.',
       'Built as a React SPA with Vite, visx, AWS Lambda, and DynamoDB.',
     ],
     stack: 'TypeScript · React · Vite · visx · Hono · AWS Lambda · DynamoDB',
