@@ -85,6 +85,17 @@ Wire the paths in `src/data/projects.ts` (`video`, `poster`, and `videoFit: 'dev
 
 Portrait Gather clips use `videoFit: 'device'`: video sits in the bezel screen hole (`left/right 5.333%`, `top/bottom 2.5%`), Apple PNG overlays on top. Encode Gather to ~1080px wide without forcing the laptop aspect.
 
+### OpenReadout note
+
+The OpenReadout clip is the posted 4:5 launch video (`~/Documents/openreadout-notes/launch/v2/post/kit/02.mp4`), pillarboxed on encode with its own background color so it fills the shared `1512 / 948` frame with `cover`:
+
+```bash
+ffmpeg -y -i 02.mp4 -an \
+  -vf "scale=758:948:flags=lanczos,pad=1512:948:(ow-iw)/2:0:color=0xF5F3EF,setsar=1,fps=30" \
+  -c:v libx264 -pix_fmt yuv420p -crf 24 -preset medium -movflags +faststart \
+  public/videos/projects/openreadout.mp4
+```
+
 ## Linting & Formatting
 
 - **Linter**: ESLint (`eslint.config.js`) — catches TypeScript and Astro issues
