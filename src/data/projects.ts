@@ -23,6 +23,24 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: 'openreadout',
+    name: 'OpenReadout',
+    tagline: 'agent lab reader',
+    tag: 'open source',
+    href: 'https://github.com/openreadout/openreadout',
+    linkLabel: 'GitHub',
+    description:
+      'An open-source reader for 120+ lab instrument file formats, built so AI agents can open raw data from microscopes, mass specs, and plate readers.',
+    body: [
+      'A single experiment can leave files from a microscope, a plate reader, and a mass spec, each in its own proprietary format. OpenReadout reads all of them with one tool, so an agent can see the data and draw figures straight from the raw files.',
+      'Supports 120+ formats with no vendor software, each validated against real files. Works with Claude, ChatGPT, Codex, and Cursor over MCP, or <a href="https://openreadout.github.io/openreadout/demo/">try it in the browser</a>.',
+      'Built as a single Rust binary with an MCP server, Python and R bindings, and a WebAssembly build.',
+    ],
+    stack: 'Rust · MCP · Python · R · WebAssembly',
+    video: '/videos/projects/openreadout.mp4',
+    poster: '/images/projects/openreadout-poster.jpg',
+  },
+  {
     slug: 'gather',
     name: 'Gather',
     tagline: 'social calendar sync',
