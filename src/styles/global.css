@@ -158,40 +158,58 @@ a:hover {
 }
 
 .site-name-mark {
+  --fold-ease: cubic-bezier(0.77, 0, 0.175, 1);
+  --fold-time: 0.5s;
+  position: relative;
   display: inline-flex;
   align-items: baseline;
 }
 
-.site-name-rest,
-.site-name-gap {
-  display: grid;
-  grid-template-columns: 1fr;
-  opacity: 1;
+.site-name-letter {
+  display: inline-block;
+  flex-shrink: 0;
 }
 
-.site-name-rest > span,
-.site-name-gap > span {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-/* Collapse to RZ on devices that can hover */
+/*
+ * Collapse to RZ on devices that can hover. Letters slide via transform
+ * (offsets measured in SiteName.astro); folded letters fade out in the first
+ * half of the slide and back in during the second half on expand, so they
+ * are gone before they reach R.
+ */
 @media (hover: hover) {
-  .site-name-rest,
-  .site-name-gap {
-    grid-template-columns: 0fr;
-    opacity: 0;
-    transition:
-      grid-template-columns 0.4s cubic-bezier(0.2, 0, 0, 1),
-      opacity 0.28s cubic-bezier(0.2, 0, 0, 1);
+  .site-name-mark {
+    width: var(--w-rz, auto);
+    transition: width var(--fold-time) var(--fold-ease);
   }
 
-  .site-name:hover .site-name-rest,
-  .site-name:focus-visible .site-name-rest,
-  .site-name:hover .site-name-gap,
-  .site-name:focus-visible .site-name-gap {
-    grid-template-columns: 1fr;
+  .site-name-letter {
+    transform: translateX(var(--dx, 0));
+    transition:
+      transform var(--fold-time) var(--fold-ease),
+      opacity calc(var(--fold-time) / 2) var(--fold-ease);
+  }
+
+  .site-name-letter[data-role='fold'] {
+    opacity: 0;
+  }
+
+  .site-name:hover .site-name-mark,
+  .site-name:focus-visible .site-name-mark {
+    width: var(--w-full, auto);
+  }
+
+  .site-name:hover .site-name-letter,
+  .site-name:focus-visible .site-name-letter {
+    transform: none;
     opacity: 1;
+    transition-delay: 0s, calc(var(--fold-time) / 2);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .site-name-mark,
+  .site-name-letter {
+    transition: none;
   }
 }
 

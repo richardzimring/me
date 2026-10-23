@@ -1,11 +1,53 @@
 ---
-/** Collapses to RZ; expands to full name on hover (pointer devices). */
+/**
+ * Collapses to RZ; expands to full name on hover (pointer devices).
+ * Each letter slides on its own: the dropped letters fold into R while
+ * fading out, and Z glides over to sit beside it.
+ */
+const letters = [
+  { ch: 'R', role: 'keep' },
+  ...[...'ichard '].map((ch) => ({ ch, role: 'fold' })),
+  { ch: 'Z', role: 'dock' },
+  ...[...'imring'].map((ch) => ({ ch, role: 'fold' })),
+];
 ---
 
 <a class="site-name" href="/" aria-label="Richard Zimring">
   <span class="site-name-mark" aria-hidden="true">
-    R<span class="site-name-rest"><span>ichard</span></span><span class="site-name-gap"
-      ><span>&nbsp;</span></span
-    >Z<span class="site-name-rest"><span>imring</span></span>
+    {
+      letters.map(({ ch, role }) => (
+        <span class="site-name-letter" data-role={role}>
+          {ch === ' ' ? ' ' : ch}
+        </span>
+      ))
+    }
   </span>
 </a>
+
+<script is:inline>
+  (() => {
+    const mark = document.currentScript.previousElementSibling.querySelector('.site-name-mark');
+    // Subpixel layout box of a letter, ignoring its current translateX.
+    const box = (el) => {
+      const rect = el.getBoundingClientRect();
+      const shift = new DOMMatrix(getComputedStyle(el).transform).m41;
+      return { left: rect.left - shift, width: rect.width };
+    };
+    const measure = () => {
+      const els = [...mark.children];
+      const boxes = els.map(box);
+      const r = boxes[0];
+      const zi = els.findIndex((el) => el.dataset.role === 'dock');
+      const last = boxes[boxes.length - 1];
+      els.forEach((el, i) => {
+        const target = i === zi ? r.width : 0;
+        el.style.setProperty('--dx', `${target - (boxes[i].left - r.left)}px`);
+      });
+      mark.style.setProperty('--w-rz', `${r.width + boxes[zi].width}px`);
+      mark.style.setProperty('--w-full', `${last.left + last.width - r.left}px`);
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+    window.addEventListener('resize', measure);
+  })();
+</script>
