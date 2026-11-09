@@ -7,6 +7,12 @@ This is Richard Zimring's personal website built with Astro.
 - **[docs/WEBSITE_STYLE.md](docs/WEBSITE_STYLE.md)** — Design tokens, color scheme, typography, component conventions, dark/light mode approach. Read this before creating or editing any visual component.
 - **[docs/CONTENT.md](docs/CONTENT.md)** — How to add blog posts, edit the resume, frontmatter schema, and content authoring guidelines.
 
+## Print resume (separate private repo)
+
+The one-page PDF resume lives in a separate, local-only repo at `/Users/richardzimring/desktop-things/resume` (`resume.html` → `richard_zimring.pdf` via `./render.sh`). It's kept out of this repo because it includes contact details that shouldn't be public. Read its `AGENTS.md` before editing it.
+
+**Keep the two in sync:** when a role, title, date or bullet changes in `src/pages/resume.mdx`, make the matching change in the print resume, and vice versa. The site can keep extra bullets the PDF drops for space.
+
 ## Project Structure
 
 ```
