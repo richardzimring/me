@@ -18,5 +18,5 @@ export const ogProjects = {
 export const ogResume = {
   label: 'Resume',
   title: 'Richard Zimring',
-  description: 'Senior software engineer · Minneapolis, MN',
+  description: 'Staff software engineer · San Diego, CA',
 } satisfies OgSpec;
