@@ -72,4 +72,8 @@ export const quotes: Quote[] = [
     text: "Most people are so upset when they use the word wrapper. It feels so derogatory; you feel insulted or something. But look, everyone's a wrapper. OpenAI is an Azure and Nvidia wrapper. Or Venture capital is a wrapper over people who actually have money that are giving to VCs to invest. You can joke Nvidia is a TSMC wrapper, because the fabrication doesn't happen inside Nvidia. Netflix runs on AWS, so it's an AWS wrapper. So there are wrappers at all levels. It's just you don't realize it because they've given you so much value that you don't care.",
     author: 'Aravind Srinivas',
   },
+  {
+    text: 'If I have seen further, it is by standing on the shoulders of giant machines.',
+    author: 'Levent Alpöge',
+  },
 ];
